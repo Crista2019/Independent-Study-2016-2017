@@ -1,0 +1,36 @@
+Data Structure Implementation
+Lists are an integral part of computing, and there are many ways to implement them. These different implementations can be considered different ways of thinking about “how” a List works behind the scenes. That said, if these different types of Lists store things differently, then what makes them all “Lists” and not different things? Well, they all share the same “core” ability: storing things in a certain order. However, “storing things in a certain order” is vague -- so naturally there are many ways to do that with different “pros” and “cons” for each approach.
+
+One common type of List is the “LinkedList” (also called the “Singly-linked List”). The LinkedList has a pretty nice recursive definition: a LinkedList is either (1) empty or (2) a value followed by a LinkedList. For example, think about the following list of numbers: 12, 99, 37. The diagram below shows how we might draw this list of numbers as a bunch of connected LinkedLists: the first LinkedList contains the value 12 and points to another LinkedList, which contains the value 99 and points to another LinkedList, which contains the value 37 and points to an empty LinkedList. An important point to make here is that we really can only access the LinkedList from the “front” -- that is, the entry that contains “12” and points to the “rest” of the LinkedList.
+
+
+
+Now, think about how we might use this LinkedList. We might add a new entry to front of it by creating a new LinkedList with the hypothetical value “42” and then pointing it to the LinkedList we already had above (which starts with “12”). That would give us a LinkedList with 4 entries, the first having a value of “42”. We might also check to see if an arbitrary value was contained in it -- such as checking to see if “37” was contained (which it is). Since the only “entry point” to the list is through the front, we’d have to “pass through” each of the LinkedList entries until we reached the one that contained “37”. There are certainly implementations that could do that faster, but hey -- I’m sure our LinkedList has a great personality.
+
+Let’s code up a represenation of a LinkedList. You can use whatever language you’d like, but use a Class to create the LinkedList as this will help you think of the problem in the right paradigm. Our LinkedList class should have a few methods, in addition to two constructors -- one which accepts a value as the only parameter and the other which accepts a value and the LinkedList-to-follow as a second parameter. In addition to the constructor described above, implement the following methods on your LinkedList class:
+Append (insert at the end) a new value B into the Linked List.
+my_linked_list.append(42) will add the integer 42 to the end of the list.
+Search to see if a value A is contained in the Linked List. (Note: it might not!)
+my_linked_list.contains(42) will return true or false.
+Delete the i-th entry from the Linked List, where where 0 < i < n.
+		my_linked_list.delete(1) will delete the second entry (the first is index=0).
+Retrieve the i-th entry from the LinkedList, where 0 < i < n.
+my_linked_list.get(1) will return the value of the second entry.
+Prepend (insert at the beginning) a new value B into the Linked List.
+my_linked_list.append(42) will add the integer 42 to the start of the list.
+Insert a new value B into the Linked List at position i, where 0 < i < n.
+my_linked_list.insert(42) will add the integer 42 to the i-ith position in the list.
+
+Mutators, Accessors, and Constructors -- oh my.
+Each of these methods follows a certain rule: they either “access” or “change” the list. These methods that “change” or “mutate” an object that already exists are referred to as “mutators”. The methods that don’t alter an object but retrieve or “access” information from it are (cleverly) referred to as “accessors”. Finally, the “constructor” (which we glossed over earlier) is responsible for actually “creating” objects in the class. In Python, the “constructor” can be thought of as the __init__(self, …) method. Every time we create a new instance of our class, the “constructor” tells us how the object is constructed. In a way, it’s like a super-mutator. For the 6 methods described above, which are accessors and which are mutators?
+
+Complexity
+By using this LinkedList, there is a clear order that 12 precedes 99; that 37 is the “last” entry; that 12 is the “first” entry; and that there are three entries overall in the List. However, how long would it take a program to determine this if all it could use was the methods on the LinkedList itself? For example, how many entries do we need to “pass through” in order to return the “last” entry? Oftentimes it’s helpful to use variables to represent the amount of “data” in our data structure; for example, a typical way we denote the number of entries in a list is with the variable n. By using a common variable to denote size, we can quickly judge and compare different implementations of Lists to find the one that best suits our use-case. For example, if we need to be able to prepend entries quickly, we might use a LinkedList; however, if the ability to retrieve the i-th element quickly is more important to us, we might choose a different implementation such as an ArrayList.
+
+Assuming we have a LinkedList of length n. Determine the computational complexity (in “Big O” notation) of the using the following methods on the LinkedList object you implemented:
+Search to see if a value A is contained in the Linked List. (Note: it might not!)
+Delete the i-th entry from the Linked List, where where 0 < i < n.
+Retrieve the i-th entry from the LinkedList, where 0 < i < n.
+Prepend (insert at the beginning) a new value B into the Linked List.
+Append (insert at the end) a new value B into the Linked List.
+Insert a new value B into the Linked List at position i, where 0 < i < n.
