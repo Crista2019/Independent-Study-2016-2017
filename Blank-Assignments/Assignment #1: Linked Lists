@@ -3,7 +3,7 @@ Lists are an integral part of computing, and there are many ways to implement th
 
 One common type of List is the “LinkedList” (also called the “Singly-linked List”). The LinkedList has a pretty nice recursive definition: a LinkedList is either (1) empty or (2) a value followed by a LinkedList. For example, think about the following list of numbers: 12, 99, 37. The diagram below shows how we might draw this list of numbers as a bunch of connected LinkedLists: the first LinkedList contains the value 12 and points to another LinkedList, which contains the value 99 and points to another LinkedList, which contains the value 37 and points to an empty LinkedList. An important point to make here is that we really can only access the LinkedList from the “front” -- that is, the entry that contains “12” and points to the “rest” of the LinkedList.
 
-
+|12|__|--->  |99|__|--->  |37|__|--->  |_X_|
 
 Now, think about how we might use this LinkedList. We might add a new entry to front of it by creating a new LinkedList with the hypothetical value “42” and then pointing it to the LinkedList we already had above (which starts with “12”). That would give us a LinkedList with 4 entries, the first having a value of “42”. We might also check to see if an arbitrary value was contained in it -- such as checking to see if “37” was contained (which it is). Since the only “entry point” to the list is through the front, we’d have to “pass through” each of the LinkedList entries until we reached the one that contained “37”. There are certainly implementations that could do that faster, but hey -- I’m sure our LinkedList has a great personality.
 
