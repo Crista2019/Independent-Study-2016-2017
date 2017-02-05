@@ -1,6 +1,6 @@
 """
-Let’s code up a represenation of a Array. 
-	You can use whatever language you’d like, but use a Class to create the Array as this will help you think of the problem in the right paradigm. 
+Let's code up a represenation of a Array. 
+	You can use whatever language you'd like, but use a Class to create the Array as this will help you think of the problem in the right paradigm. 
 	Our Array class should have a few methods, 
 	in addition to two constructors 
 	--one which accepts a value as the only parameter and the other which accepts a value and the Array-to-follow as a second parameter
@@ -9,56 +9,49 @@ Let’s code up a represenation of a Array.
 print("In addition to the constructor described above, implement the following methods on your Array class:")
 
 class Array(object):
-    def __init__(self, List):
+    def __init__(self, list): #CASEY: "list" is actually a keyword in Python, so be wary of using it. Maybe "new_list" or "my_list" or something.
         self.list = list 
 
     #Append (insert at the end) a new value B into the Array.
 		#my_linked_list.append(42) will add the integer 42 to the end of the list.
-    def append(self, val, list):
+    def append(self, val): #CASEY: We never use that "list" variable, so we actually don't need it. We're using the "self.list" attribute instead.
         self.list[self.list.len()] = self.val
-        return self.list
+        #CASEY: If we want this to be a "mutator", we actually don't need to return the list itself. We've already changed "self", anyway.
 
     #Search to see if a value A is contained in the Array. (Note: it might not!)
 		#my_linked_list.contains(42) will return true or false.
-    def contains(self, val, list):
-        self.false = True
-        for i in self.list:
-            if self.list[i] == self.val:
+    def contains(self, val): # CASEY: We don't actually need that "list" variable -- so let's delete it. :-)
+        #CASEY: Try to limit the number of variables you need, as often it will make your code cleaner.
+        for item in self.list: #CASEY: Be careful what you're iterating over. In this case, "i" is not the index but the item itself.
+            if item == val: #CASEY: Since we're iterating through items, we actually don't need to use the brackets.
                 return True
-                false = False
-        if false == True:
-            return False
+        return False #CASEY: If we make it through the whole list without finding the "val", it logically can't have been there -- so return False.
 
     #Delete the i-th entry from the Array, where where 0 < i < n.
 	    #my_linked_list.delete(1) will delete the second entry (the first is index=0).
-    def delete(self, val, list):
-        for i in self.list:
-            while 0 < i and i < self.list.len():         
-                if i == self.val:
-                    del self.list[self.val]
-        return self.list
+    def delete(self, val):
+        for i in range(self.list.len()): #CASEY: If we want to iterate through the indices, we'll need to create a "range".
+            #CASEY: We're already iterating through the whole array, so no need to loop again with that "while" loop.
+            if self.list[i] == val:
+	        del self.list[i]
+        # No need to return; this is a "mutator" after all.
 
     #Retrieve the i-th entry from the Array, where 0 < i < n.
 	    #my_linked_list.get(1) will return the value of the second entry.
-    def get(self, val, list):
-        for i in self.list:
-            while 0 < i and i < self.list.len():
-                if i == self.val:
-                    return self.list[self.val]
+    def get(self, i):
+        return self.list[i] #CASEY: The "get" method isn't as complicated with an ArrayList. Really, we can just defer to the "get" or "indexing" function of the Python list (stored at "self.list").
             
     #Prepend (insert at the beginning) a new value B into the Array.
 	    #my_linked_list.preppend(42) will add the integer 42 to the start of the list.
-    def prepend(self, val, list):
-        for i in self.list:
-            self.list[i] = self.list[i+1]
-        self.list[0] = self.val
-        return self.list
+    def prepend(self, val):
+        # CASEY: Prepend doesn't necessarily "need" to loop through the list. Really, we just need to pop something on the front of the list.
+        self.list = [val] + self.list
     
     #Insert a new value B into the Array at position i, where 0 < i < n.
 	    #my_linked_list.insert(42) will add the integer 42 to the i-ith position in the list.
-    def insert(self, val, pos, list):
-        self.list[pos] = self.val 
-        return self.list
+    def insert(self, val, pos):
+        #CASEY: Super close, but we want to make sure we don't "erase" any data in the list. We just want to add/inject "more".
+        self.list = self.list[:pos] + [self.val] + self.list[pos+1:]
 
 print("For the 6 methods described above, which are accessors and which are mutators?")
 
@@ -71,7 +64,7 @@ mutators.append("append", "delete", "prepend", "insert")
 print(accessors)
 print(mutators)
 
-print("Determine the computational complexity (in “Big O” notation) of the using the following methods on the Array object you implemented:")
+print("Determine the computational complexity (in \"Big O\" notation) of the using the following methods on the Array object you implemented:")
 
 comp = "Computational Complexity: "
 testList = Array(["A", "B", "C", "D", 5, 6, 7])
