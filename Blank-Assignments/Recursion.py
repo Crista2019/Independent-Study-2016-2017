@@ -18,7 +18,13 @@ In this vein, we could think about recursion as a different way of writing
 a `while` loop. In fact, all recursion can be replaced with `while` loops, 
 but oftentimes at the cost of making code harder to understand.
 
-Read this: https://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+TASK: Read these: 
+ - https://www.cs.utah.edu/~germain/PPS/Topics/recursion.html
+ - http://stackoverflow.com/questions/717725/understanding-recursion
+ - http://www.programmerinterview.com/index.php/recursion/explanation-of-recursion/
+
+This also might be helpful:
+ - http://softwareengineering.stackexchange.com/questions/25052/in-plain-english-what-is-recursion
 """
 
 """
@@ -116,7 +122,9 @@ print "Woohoo! All tests pass!"
 """
 So, our recursive Fibonacci function could be written as a loop -- but there are trade-offs. Let's first look at the
 obvious. The `fib_loop` function is a bit more complex to read. If needed to write a proof for it, it'd also be
-trickier. However, how many "work steps" are we doing? Well, let's dissect it..
+trickier. However, how many "work steps" are we doing? In other words, what's the "complexity"? Well, let's dissect it..
+
+TASK: Read this: https://www.quora.com/What-are-some-easy-ways-to-understand-and-calculate-the-time-complexity-of-algorithms
 
     def fib_loop(n): 
         previous = 1 #COMPL: O(1)
@@ -138,6 +146,10 @@ previous function! That doesn't mean we should always use `fib_loop`; the `fib` 
 easier to understand on a quick read-through.
 
 Just to drive home what "complexity" really means, let's actually time these functions to see how they act differently.
+Run this script and look at the output of the `time_it` calls below. Note that the recursive function takes *much*
+longer to run; meanwhile, the loop version actually completes pretty quickly! Thanks to our complexity estimate, we
+didn't actually need to run the functions to know that the loop version would be faster. Neato.
+
 """
 
 # A helper function to help us time our `fib` functions.
@@ -165,6 +177,7 @@ def test(actual, expected):
 
 # This function should return the sum of all numbers up to and including `n`.
 # TASK: Fix this function using recursion. The tests below should pass.
+# TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function.
 def sum_up_to_n(n):
     # TODO: Add Base Case
     # TODO: Add Recursive Case
@@ -178,6 +191,7 @@ test(sum_up_to_n(4), 10)
 
 # This funciton will "flip" a list using recursion. It might be tempting to cheat with a loop or by using the_list[::-1], but refrain. ;-)
 # TASK: Fix this function using recursion. The tests below should pass.
+# TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function.
 def flip_a_list(the_list):
     # TODO: Add Base Cases -- there should be two, one when the list is empty and one when the list has a single item in it.
     # TODO: Add Recursive Case
@@ -190,6 +204,7 @@ test(flip_a_list([3,2,1]), [1,2,3])
 
 # This function will take a `value_to_add` and a list of numbers. It should return the list where each element has had value_to_add added to it.
 # TASK: Fix this function using recursion. The tests below should pass.
+# TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function.
 def add_to_list(value_to_add, the_list):
     # TODO: Add Base Case
     # Add Recursive Case
@@ -201,6 +216,7 @@ test(add_to_list(2, [1,2,3]), [3,4,5])
 
 # This function will take a string and determine if it is recursive or not. If it is, it should return True; if not, return False.
 # TASK: Fix this function using recursion. The tests below should pass.
+# TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function.
 def is_palindrome(string):
     # TODO: Add Base Case
     # TODO: Add Recursive Case
@@ -212,3 +228,19 @@ test(is_palindrome("cat"), False)
 test(is_palindrome("tat"), True)
 test(is_palindrome("tacocat"), True)
 test(is_palindrome("taco cat"), False)
+
+# This function will take a value `n` and return the factorial of n (mathematically "n!"). This is the same as n * (n-1) * (n-2) * ... * 1.
+# TASK: Fix this function using recursion. The tests below should pass.
+# TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function.
+def factorial(n):
+    # TODO: Add Base Case
+    # TODO: Add Recursive Case
+    pass
+
+test(factorial(0), 1)
+test(factorial(1), 1)
+test(factorial(2), 2)
+test(factorial(3), 6)
+test(factorial(4), 24)
+
+
