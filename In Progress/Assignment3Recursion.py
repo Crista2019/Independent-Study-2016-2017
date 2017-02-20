@@ -169,23 +169,57 @@ flip_a_list([])  OR  flip_a_list([4,3,2,1])
   |                     |
   |                     |
   return []             return [4,3,2,1]
-
-
 """
 
 
 # This function will take a `value_to_add` and a list of numbers. It should return the list where each element has had value_to_add added to it.
 # TASK: Fix this function using recursion. The tests below should pass.
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1+1) * O(n) = O(n)
-    currentElement = len(the_list) - 1 #COMPL: O(1)
+"""def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1+1) * O(n) = O(n)
+    new_list = the_list
+    currentElement = len(new_list) - 1 #COMPL: O(1)
     # TODO: Add Base Case
     if currentElement < 0:
       return the_list #COMPL: O(1)
     # Add Recursive Case
     else: #COMPL: O(n) * >>
-      the_list[currentElement] += value_to_add #COMPL: O(1)
+      new_list[currentElement] += value_to_add #COMPL: O(1)
       currentElement -= 1 #COMPL: O(1)
+      add_to_list(value_to_add, the_list[:-1])
+      
+def add_to_list(value_to_add, the_list):
+  currentIndex = 0
+  # TODO: Add Base Case
+  if len(the_list) - 1 == currentIndex:
+    the_list[currentIndex] += value_to_add
+    return the_list
+  # Add Recursive Case
+  else:
+    the_list[currentIndex] += value_to_add
+    print(the_list)
+    currentIndex += 1
+    add_to_list(value_to_add, the_list[:-1])
+    
+def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1) + O(1) + O(n) = O(n)
+  # TODO: Add Base Case
+  new_list = []
+  recursive_list = the_list
+  if len(the_list) == 1: #COMPL: O(1)
+    new_list[0] = recursive_list[0] + value_to_add
+    return new_list #COMPL: O(1)
+  # TODO: Add Recursive Case
+  else:
+    new_list[0] = the_list[0] + value_to_add
+    recursive_list = the_list[1:]
+    add_to_list(value_to_add, recursive_list)
+    """
+def add_to_list(value_to_add, the_list):
+  new_list = []
+  if len(the_list) < 1:
+    return new_list #COMPL: O(1)
+  else:
+    new_list.append(the_list[0] + value_to_add)
+    add_to_list(value_to_add, the_list[1:]) 
 
 test(add_to_list(1, [0]), [1])
 test(add_to_list(1, [1,2]), [2,3])
@@ -219,17 +253,13 @@ test(is_palindrome("taco cat"), False)
 # This function will take a value `n` and return the factorial of n (mathematically "n!"). This is the same as n * (n-1) * (n-2) * ... * 1.
 # TASK: Fix this function using recursion. The tests below should pass. (DONE)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-def factorial(n): # O(1) + O(1) + + O(1) O(1+1+1) * O(n) = O(n)
-  fact = 1 #COMPL: O(1)
-  newNum = n #COMPL: O(1)
+def factorial(n): # O(1) O(1) * O(n) = O(n)
   # TODO: Add Base Case
-  if n <= 1:
-    return fact #COMPL: O(1)
+  if n < 1:
+    return 1 #COMPL: O(1)
   # TODO: Add Recursive Case
-  else: #COMPL: O(n) *>>
-    fact = fact * newNum #COMPL: O(1)
-    newNum = n - 1 #COMPL: O(1)
-    factorial(newNum) #COMPL: O(1)
+  else: ##COMPL: O(n)>
+    return n * factorial(n-1) #COMPL: O(1)
 
 test(factorial(0), 1)
 test(factorial(1), 1)
