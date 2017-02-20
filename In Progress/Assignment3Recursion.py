@@ -1,4 +1,3 @@
-
 #Most Recent Work Day: 2/19/17
 
 """
@@ -28,8 +27,10 @@ fib(1)  +  fib(0)    1
   |         |
   |         |
   1         0
+
 TASK: Then, do one for fib(5). Feel free to just refer to our diagram above `fib(3)`
   to avoid making an absurdly large diagram
+
 fib(5) 
   |  \
   |   \
@@ -66,6 +67,7 @@ assert fib(5) == 5 # The 5th Fib element is actually "5", conveniently enough.
 print("Woohoo! All tests pass!")
 
 """TASK: Read this: https://www.quora.com/What-are-some-easy-ways-to-understand-and-calculate-the-time-complexity-of-algorithms (READ)
+
     def fib_loop(n): 
         previous = 1 #COMPL: O(1)
         current=0 #COMPL: O(1)
