@@ -1,4 +1,5 @@
 #Most Recent Work Day: 2/19/17
+
 """
 TASK: Read these: 
  - https://www.cs.utah.edu/~germain/PPS/Topics/recursion.html (READ)
@@ -102,6 +103,8 @@ print("Performing time tests!")
 time_it(fib_loop, 30) # O(n)
 time_it(fib, 30) # O(2^n)
 
+
+
 """
 Now, let's write up some other recursive functions. Run this script in order to "test" your implementation. Everything should pass.
 These are tricky, so be sure to work out examples by hand and *then* write up your algorithms. If you get stuck, take a step back
@@ -127,30 +130,27 @@ test(sum_up_to_n(2), 3)
 test(sum_up_to_n(3), 6)
 test(sum_up_to_n(4), 10)
 
+
+
 # This funciton will "flip" a list using recursion. It might be tempting to cheat with a loop or by using the_list[::-1], but refrain. ;-)
 # TASK: Fix this function using recursion. The tests below should pass. (DONE)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-def flip_a_list(the_list): #O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1+1) * O(n) = O(n)
-    # TODO: Add Base Cases -- there should be two, one when the list is empty and one when the list has a single item in it.
-    test_list = the_list #COMPL: O(1)
-    new_list = [] #COMPL: O(1)
-    currentIndex = len(test_list) - 1 #COMPL: O(1)
-    if test_list == []: #COMPL: O(1)
-      return [] #COMPL: O(1)
-    elif currentIndex == 0: #COMPL: O(1)
-      new_list.append(test_list[0]) #COMPL: O(1)
-      return new_list #COMPL: O(1)
-    # TODO: Add Recursive Case
-    else:
-      new_list.append(test_list[currentIndex]) #COMPL: O(1)
-      del test_list[currentIndex]
-      print(test_list, new_list)
-      flip_a_list(test_list) #COMPL: O(n) * ^^
+def flip_a_list(the_list): #O(1) + O(1) + O(n) * O(n) = O(n^2)
+  listSize = len(the_list) #COMPL: O(1)
+  # TODO: Add Base Cases -- there should be two, one when the list is empty and one when the list
+  if the_list == [] or listSize == 1:
+    return the_list #COMPL: O(1)
+  # TODO: Add Recursive Case
+  else:
+    #this should run the list through the reversal function without the first value, in addition to only the 0th index
+    return flip_a_list(the_list[1:]) + flip_a_list(the_list[:1]) #COMPL: O(n) * O(n)
 
 test(flip_a_list([]), [])
 test(flip_a_list([1]), [1])
 test(flip_a_list([2,1,2]), [2,1,2])
 test(flip_a_list([3,2,1]), [1,2,3])
+
+
 
 # This function will take a `value_to_add` and a list of numbers. It should return the list where each element has had value_to_add added to it.
 # TASK: Fix this function using recursion. The tests below should pass.
@@ -165,30 +165,25 @@ def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1+1) * O(n) = O(n)
     else:
       return the_list #COMPL: O(1)
 
-
-
-
 test(add_to_list(1, [0]), [1])
 test(add_to_list(1, [1,2]), [2,3])
 test(add_to_list(2, [1,2,3]), [3,4,5])
 
+
+
 # This function will take a string and determine if it is recursive or not. If it is, it should return True; if not, return False.
 # TASK: Fix this function using recursion. The tests below should pass. (DONE)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-def is_palindrome(string): #O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1) + O(1+1+1) * O(n) = O(n)
-  firstVal = 0 #COMPL: O(1)
-  lastVal = len(string) - 1 #COMPL: O(1)
-  new_string = string #COMPL: O(1)
+
+def is_palindrome(string): #O(1) + O(1) + O(1) + O(1) + O(n) = O(n)
   # TODO: Add Base Case
-  if string == "": #COMPL: O(1)
+  if len(string) <= 1: #COMPL: O(1)
     return True #COMPL: O(1)
+  elif string[0] != string[-1]: #COMPL: O(1)
+    return False #COMPL: O(1)
   # TODO: Add Recursive Case
-  elif string[firstVal] == string[lastVal]: #COMPL: O(1)  
-    new_string = new_string[1:] #COMPL: O(1)
-    new_string = new_string[lastVal-1:] #COMPL: O(1)
-    is_palindrome(new_string) #COMPL: O(n) * ^^^
   else:
-     return False #COMPL: O(1)
+    return is_palindrome(string[1:-1]) #COMPL: O(n)
 
 test(is_palindrome(""), True)
 test(is_palindrome("t"), True)
@@ -197,18 +192,20 @@ test(is_palindrome("tat"), True)
 test(is_palindrome("tacocat"), True)
 test(is_palindrome("taco cat"), False)
 
+
+
 # This function will take a value `n` and return the factorial of n (mathematically "n!"). This is the same as n * (n-1) * (n-2) * ... * 1.
 # TASK: Fix this function using recursion. The tests below should pass. (DONE)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
 def factorial(n): # O(1) + O(1) + O(1+1) * O(n) = O(n)
-  factorial = 1 #COMPL: O(1)
+  fact = 1 #COMPL: O(1)
     # TODO: Add Recursive Case
   while n > 1: #COMPL: O(n) *>>
-    factorial = factorial * n #COMPL: O(1)
+    fact = fact * n #COMPL: O(1)
     n = n - 1 #COMPL: O(1)
   # TODO: Add Base Case
   else:
-    return factorial #COMPL: O(1)
+    return fact #COMPL: O(1)
 
 test(factorial(0), 1)
 test(factorial(1), 1)
