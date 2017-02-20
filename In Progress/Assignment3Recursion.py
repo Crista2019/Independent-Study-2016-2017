@@ -1,4 +1,4 @@
-#Most Recent Work Day: 2/19/17
+#Most Recent Work Day: 2/20/17
 
 """
 TASK: Read these: 
@@ -27,10 +27,8 @@ fib(1)  +  fib(0)    1
   |         |
   |         |
   1         0
-
 TASK: Then, do one for fib(5). Feel free to just refer to our diagram above `fib(3)`
   to avoid making an absurdly large diagram
-
 fib(5) 
   |  \
   |   \
@@ -67,7 +65,6 @@ assert fib(5) == 5 # The 5th Fib element is actually "5", conveniently enough.
 print("Woohoo! All tests pass!")
 
 """TASK: Read this: https://www.quora.com/What-are-some-easy-ways-to-understand-and-calculate-the-time-complexity-of-algorithms (READ)
-
     def fib_loop(n): 
         previous = 1 #COMPL: O(1)
         current=0 #COMPL: O(1)
@@ -137,7 +134,7 @@ test(sum_up_to_n(4), 10)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
 def flip_a_list(the_list): #O(1) + O(1) + O(n) * O(n) = O(n^2)
   listSize = len(the_list) #COMPL: O(1)
-  # TODO: Add Base Cases -- there should be two, one when the list is empty and one when the list
+  # TODO: Add Base Cases -- there should be two, one when the list is empty and one when the list has 1 item
   if the_list == [] or listSize == 1:
     return the_list #COMPL: O(1)
   # TODO: Add Recursive Case
@@ -150,6 +147,31 @@ test(flip_a_list([1]), [1])
 test(flip_a_list([2,1,2]), [2,1,2])
 test(flip_a_list([3,2,1]), [1,2,3])
 
+""" FLIP_A_LIST CALL TREE:
+flip_a_list([1,2,3,4])
+  |    \
+  |     \
+  |      \
+flip_a_list([2,3,4])  +   flip_a_list([1])  
+  |      \            
+  |       \        
+  |        \        
+flip_a_list(3,4)  +  flip_a_list(2,1)          
+  |   \          \      
+  |    \          \    
+  |     \          \         
+flip_a_list([4])  OR  flip_a_list([3,2,1])
+  |   \          \      
+  |    \          \    
+  |     \          \         
+flip_a_list([])  OR  flip_a_list([4,3,2,1])             
+  |                     |
+  |                     |
+  |                     |
+  return []             return [4,3,2,1]
+
+
+"""
 
 
 # This function will take a `value_to_add` and a list of numbers. It should return the list where each element has had value_to_add added to it.
@@ -157,13 +179,13 @@ test(flip_a_list([3,2,1]), [1,2,3])
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
 def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1+1) * O(n) = O(n)
     currentElement = len(the_list) - 1 #COMPL: O(1)
+    # TODO: Add Base Case
+    if currentElement < 0:
+      return the_list #COMPL: O(1)
     # Add Recursive Case
-    while currentElement >= 0: #COMPL: O(n) * >>
+    else: #COMPL: O(n) * >>
       the_list[currentElement] += value_to_add #COMPL: O(1)
       currentElement -= 1 #COMPL: O(1)
-    # TODO: Add Base Case
-    else:
-      return the_list #COMPL: O(1)
 
 test(add_to_list(1, [0]), [1])
 test(add_to_list(1, [1,2]), [2,3])
@@ -197,15 +219,17 @@ test(is_palindrome("taco cat"), False)
 # This function will take a value `n` and return the factorial of n (mathematically "n!"). This is the same as n * (n-1) * (n-2) * ... * 1.
 # TASK: Fix this function using recursion. The tests below should pass. (DONE)
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-def factorial(n): # O(1) + O(1) + O(1+1) * O(n) = O(n)
+def factorial(n): # O(1) + O(1) + + O(1) O(1+1+1) * O(n) = O(n)
   fact = 1 #COMPL: O(1)
-    # TODO: Add Recursive Case
-  while n > 1: #COMPL: O(n) *>>
-    fact = fact * n #COMPL: O(1)
-    n = n - 1 #COMPL: O(1)
+  newNum = n #COMPL: O(1)
   # TODO: Add Base Case
-  else:
+  if n <= 1:
     return fact #COMPL: O(1)
+  # TODO: Add Recursive Case
+  else: #COMPL: O(n) *>>
+    fact = fact * newNum #COMPL: O(1)
+    newNum = n - 1 #COMPL: O(1)
+    factorial(newNum) #COMPL: O(1)
 
 test(factorial(0), 1)
 test(factorial(1), 1)
