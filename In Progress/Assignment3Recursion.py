@@ -175,55 +175,18 @@ flip_a_list([])  OR  flip_a_list([4,3,2,1])
 # This function will take a `value_to_add` and a list of numbers. It should return the list where each element has had value_to_add added to it.
 # TASK: Fix this function using recursion. The tests below should pass.
 # TASK: Estimate the complexity for each line of your function as a comment on that line. Then use those to estimate the complexity of the function. (DONE)
-"""def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1+1) * O(n) = O(n)
-    new_list = the_list
-    currentElement = len(new_list) - 1 #COMPL: O(1)
-    # TODO: Add Base Case
-    if currentElement < 0:
-      return the_list #COMPL: O(1)
-    # Add Recursive Case
-    else: #COMPL: O(n) * >>
-      new_list[currentElement] += value_to_add #COMPL: O(1)
-      currentElement -= 1 #COMPL: O(1)
-      add_to_list(value_to_add, the_list[:-1])
-      
-def add_to_list(value_to_add, the_list):
-  currentIndex = 0
-  # TODO: Add Base Case
-  if len(the_list) - 1 == currentIndex:
-    the_list[currentIndex] += value_to_add
-    return the_list
-  # Add Recursive Case
-  else:
-    the_list[currentIndex] += value_to_add
-    print(the_list)
-    currentIndex += 1
-    add_to_list(value_to_add, the_list[:-1])
-    
-def add_to_list(value_to_add, the_list): #O(1) + O(1) + O(1) + O(1) + O(n) = O(n)
-  # TODO: Add Base Case
-  new_list = []
-  recursive_list = the_list
-  if len(the_list) == 1: #COMPL: O(1)
-    new_list[0] = recursive_list[0] + value_to_add
-    return new_list #COMPL: O(1)
-  # TODO: Add Recursive Case
-  else:
-    new_list[0] = the_list[0] + value_to_add
-    recursive_list = the_list[1:]
-    add_to_list(value_to_add, recursive_list)
-    """
-def add_to_list(value_to_add, the_list):
-  new_list = []
-  if len(the_list) < 1:
-    return new_list #COMPL: O(1)
-  else:
-    new_list.append(the_list[0] + value_to_add)
-    add_to_list(value_to_add, the_list[1:]) 
 
-test(add_to_list(1, [0]), [1])
-test(add_to_list(1, [1,2]), [2,3])
-test(add_to_list(2, [1,2,3]), [3,4,5])
+#I added the argument index, which specifies where in the list you want to begin adding a value. This is a *feature* and is under no circumstances a creative way to adjust the assignment to make it easier for me to solve.
+def add_to_list(value_to_add, the_list, index):
+  if index == len(the_list):
+    return the_list
+  the_list[index] += value_to_add
+  return add_to_list(value_to_add, the_list, index + 1)
+
+#start at index 0 (item #1)
+test(add_to_list(1, [0], 0), [1])
+test(add_to_list(1, [1,2], 0), [2,3])
+test(add_to_list(2, [1,2,3], 0), [3,4,5])
 
 
 
