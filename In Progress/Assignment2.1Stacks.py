@@ -31,11 +31,11 @@ class Stack(object):
 
   def size(self, index=0, stackSize=0):
     #BASE CASE
-    if index == len(self):
+    if index == len(self.data):
       return stackSize
       #RECURSIVE CASE
     else:
-      size(self, index+1, stackSize+1)
+      self.size(index+1, stackSize+1)
     
     
     #return len(self.data) #This should return the number of elements in a stack
@@ -45,28 +45,30 @@ class Stack(object):
 
   def push(self, new_val, index=0):
     #BASE CASE
-    if index == len(self.data)-1:
+    size = len(self.data)
+    if size == index:
       #new value (i.e. 'top') will be defined as the last index of the data list (i.e. self.data.size() - 1)
       self.data.append(new_val)
-      return self
+      return self.data
     #RECURSIVE CASE
     else:
-      push(self, new_val, index+1)
+      self.push(new_val, index+1)
 
   def pop(self, index=0):
     if index == len(self.data)-1:
       del self.data[index]
-      return self
+      return self.data
     #RECURSIVE CASE
     else:
-      pop(self, index+1)
-
+      self.pop(index+1)
+      
   def peek(self, index=0):
-    if index == len(self.data)-1: #Again, top is the last data element, but it is easier to visualize LIFO that way. The last in is the last index value.
+    size = len(self.data) - 1
+    if index == size: #Again, top is the last data element, but it is easier to visualize LIFO that way. The last in is the last index value.
       return self.data[index]
-    #RECURSIVE CASE
+      #RECURSIVE CASE
     else:
-      peek(self, index+1)
+      peek(index+1)
     
 test_stack = Stack()
 test_stack.is_empty()
