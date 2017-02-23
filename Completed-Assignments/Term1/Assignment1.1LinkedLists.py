@@ -21,46 +21,58 @@ class LinkedList(object):
     #example of recursion: when something is defined by type (itself).
     #Linked List is defined by being larger than at least one more value ahead of it
 	def size(self):
-		if self.rest:
-			return 1 + self.rest.size()
-		else:
+	  #Base Case
+		if self.rest == False:
 			return 1
+		#Recursion
+		return 1 + self.rest.size()
 
     #Append (insert at the end) a new value B into the Linked List.
 		#my_linked_list.append(42) will add the integer 42 to the end of the list
 	def append(self, val):
+	  #Base Case
 		if self.rest == None:
 			self.rest = LinkedList(val)
+		#Recursion
 		else: 
 			self.rest.append(val)
 
     #Search to see if a value A is contained in the Linked List. (Note: it might not!)
 		#my_linked_list.contains(42) will return true or false.
 	def contains(self, val):
+	  #Base Case 1
 		if self.head == val:
 			return True
+		#Recursion
 		elif self.rest.contains(val):
 			return True
+		#Base Case 2
 		else:
 			return False
 
     #Delete the i-th entry from the Linked List, where where 0 < i < n.
 	    #my_linked_list.delete(1) will delete the second entry (the first is index=0).
 	def delete(self, val):
+	  #Having no values in the list is like an implicit base case (you can't delete something that doesn't exist)
 		if self.rest:
+		  #Base Case
 			if val == 0:
 				self.head = self.rest.head
 				self.rest = self.rest.rest
+			#Recursion 
 			else:
 				self.rest.delete(val-1)
 
     #Retrieve the i-th entry from the LinkedList, where 0 < i < n.
 	    #my_linked_list.get(1) will return the value of the second entry.
 	def get(self, index):
+	  #Base Case 1
 		if index == 0: 
 			return self.head
+		#Recursion
 		elif self.rest:
 			return self.rest.get(index)
+		#Same as delete when no values exist; Base Case 2
 		else:
 			return False
 			raise Exception("This position is not contained in this list")
@@ -69,18 +81,25 @@ class LinkedList(object):
     #Prepend (insert at the beginning) a new value B into the Linked List.
 	    #my_linked_list.preppend(42) will add the integer 42 to the start of the list.
 	def prepend(self, val):
-		new_liList = LinkedList(self.head, self.rest)
-		self.head = val
-		self.rest = new_liList
+	  #Base Case 1: Empty List
+	  if self.head == False:
+	    self.head = val
+	  #Recursion
+	  new_linkedList = LinkedList(self.head, self.rest) #making a new list that is currently == the old list
+	  self.head = val #defining the value to append as head (i.e. the front node)
+	  self.rest = new_linkedList #redefining all of the previous list as the rest in the new list
 
 
     #Insert a new value B into the Linked List at position i, where 0 < i < n.
 	    #my_linked_list.insert(42) will add the integer 42 to the i-ith position in the list.
 	def insert(self, pos, val):
+	  #Base Case
 		if pos == 0:
 			self.prepend(val)
+		#Recursion
 		elif self.rest:
 			self.rest.insert(pos, val)
+		#Base Case 2 (The list doesn't reach that index of values)
 		else:
 		  print("This position is not contained in this list")
 			#raise Exception("This position is not contained in this list")
