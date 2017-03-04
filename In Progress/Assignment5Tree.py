@@ -1,5 +1,4 @@
 """
-
 Trees are pretty cool data structures. The basic idea with a Tree
 is that it is a node that points to multiple different nodes, each 
 of which may point to additional nodes. Notice the diagram below.
@@ -89,42 +88,39 @@ class BinaryTree(object):
 		left_repr = self.left.__repr__(level = level+1) if self.left else "<NONE>"
 		right_repr = self.right.__repr__(level = level+1) if self.right else "<NONE>"
 		return "{}\n{}{}\n{}{}".format(self.value, indent, left_repr, indent, right_repr)
-
-# Return True if this BinaryTree has no children, or False otherwise.
+		
+  #Return True if this BinaryTree has no children, or False otherwise.
 	def is_leaf(self):
-		if bool(self.value):
-			if self.left == None or self.right == None:
-			  return False
-		else:
-			return True
+	  if bool(self.value):
+	    if self.left == None or self.right == None:
+	      return False
+	    else:
+	       return True
 
 	# Return the number of elements in the tree.
-	def size(self, size=0): #TOTAL COMPL: O(n^2)
-		root = self.value
+	def size(self): #TOTAL COMPL: O(n^2)
 		#I'm going to traverse this tree in preorder (root 1st then all left branches, then finally all right branches)
-		if root == None:
-			return size #COMPL: O(1)
+		if self.value == None:
+			return 0 #COMPL: O(1)
 		else:
-			size += 1 #COMPL: O(1)
 			if not self.left == None:
-			  self.left.size(size) #COMPL: O(n)
+			  return 1 + self.left.size() #COMPL: O(n)
+			else:
+			  return 1
 			if not self.left == None:
-			  self.right.size(size) #COMPL: O(n)
-			return size #COMPL: O(1)
+			  return 1 + self.right.size() #COMPL: O(n)
+			else:
+			  return 1
 
 # Return the number of elements in the longest branch of the tree.
-	def height(self, level=None): #TOTAL COMPL: O(log n)
+	def height(self): #TOTAL COMPL: O(log n)
 		leftSize, rightSize = self.left.size(), self.right.size() #COMPL: O(1)
-		if bool(self.value):
-			level = 1 #COMPL: O(1)
 		if leftSize >= rightSize: #If they are the same size, it doesnt matter which one gets traversed, so it will arbitrarily be the left path of the root
-			self.left.height(level=level+1) #COMPL: O(log n)
-			return level #COMPL: O(1)
+			return 1 + self.left.height() #COMPL: O(log n)
 		elif rightSize > leftSize:
-			self.right.height(level=level+1) #COMPL: O(log n)
-			return level #COMPL: O(1)
+			return 1 + self.right.height() #COMPL: O(log n)
 		else:
-			return level #COMPL: O(1)
+			return 0 #COMPL: O(1)
 
 # Return True if search_val is contained in this tree's contained values, or False otherwise.
 # Implement this recursively with an O(log n) algorithm. Think of your "base" and "recursive" cases.
@@ -186,31 +182,27 @@ class Tree(object):
 		self.children.append(child_tree) #COMPL: O(1)
 
 	# Return the number of elements in the tree.	
-	def size(self, size=0): #TOTAL COMPL: O(n^2)
+	def size(self): #TOTAL COMPL: O(n^2)
 		if self.value == []:
-			return size #COMPL: O(1)
+			return 0 #COMPL: O(1)
 		else:
 			size += 1 #COMPL: O(1)
 			if self.children == []:
-				pass #COMPL: O(1)
+				return 1 #COMPL: O(1)
 			else:
 				for c in self.children: #COMPL: O(n)
-					size += 1 #COMPL: O(1)
-					c.size() #COMPL: O(n)
-			return size #COMPL: O(1)
-
+					return 1 + c.size() #COMPL: O(n)
 
 # Return the number of elements in the longest branch of the tree.
-	def height(self, height=0): #TOTAL COMPL: O(n^2)
+	def height(self): #TOTAL COMPL: O(n^2)
 		if self.value == None:
-			return height #COMPL: O(1)
+			return 0 #COMPL: O(1)
 		if self.children == []:
-		  height += 1 #COMPL: O(1)
-		  return height #COMPL: O(1)
+		  return 1 #COMPL: O(1)
 		else:
 			for c in self.children: #COMPL: O(n)
 				if not c.size == 1:
-					c.height() #COMPL: O(n)
+					return 1 + c.height() #COMPL: O(n)
 
 # Return True if the `search_val` exists somewhere in the tree or False otherwise.
 	def contains(self, search_val): #TOTAL COMPL: O(n^2)
@@ -225,22 +217,23 @@ class Tree(object):
 		  return False #COMPL: O(1)
 
 # Return the Tree that contains a certain `search_val`. If it doesn't exist, return None.
-	def get_by_value(self, search_val):
+	def get_by_value(self, search_val): #TOTAL COMPL: O(n^2)
 		if bool(self.value.contains(search_val)) == True:
 			if self.value == search_val:
-				return "Height of value in tree: 1"
+				return 1 #Height of tree containing search value COMPL: O(1)
 			if not self.children == []:
-				#for c in self.children: #COMPL: O(n)
-				#if not c.size == 1:
-				#	c.height() #COMPL: O(n)
-
+			  for c in self.children: #COMPL: O(n)
+			    if not c == search_val:
+			      return 1 + c.get_by_value(search_val) #COMPL: O(n)
+		else:
+		  return None #COMPL: O(1)
 
 # Return True if this BinaryTree has no children, or False otherwise.
-	def is_leaf(self):
-		if self.children == []:
-			return True
+	def is_leaf(self): #TOTAL COMPL: O(1)
+		if not self.children == []:
+			return False #COMPL: O(1)
 		else:
-			return False
+			return True #COMPL: O(1)
 		
 """
 Below is the test suite for the Tree and BinaryTree classes. You shouldn't need to
