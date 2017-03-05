@@ -91,36 +91,27 @@ class BinaryTree(object):
 		
   #Return True if this BinaryTree has no children, or False otherwise.
 	def is_leaf(self):
-	  if bool(self.value):
-	    if self.left == None or self.right == None:
-	      return False
-	    else:
-	       return True
-
-	# Return the number of elements in the tree.
+	  if self.left == None or self.right == None:
+	    return True
+	  else:
+	    return False  
+	    
+ #Return the number of elements in the tree.
 	def size(self): #TOTAL COMPL: O(n^2)
-		#I'm going to traverse this tree in preorder (root 1st then all left branches, then finally all right branches)
-		if self.value == None:
-			return 0 #COMPL: O(1)
-		else:
-			if not self.left == None:
-			  return 1 + self.left.size() #COMPL: O(n)
-			else:
-			  return 1
-			if not self.left == None:
-			  return 1 + self.right.size() #COMPL: O(n)
-			else:
-			  return 1
-
-# Return the number of elements in the longest branch of the tree.
-	def height(self): #TOTAL COMPL: O(log n)
-		leftSize, rightSize = self.left.size(), self.right.size() #COMPL: O(1)
-		if leftSize >= rightSize: #If they are the same size, it doesnt matter which one gets traversed, so it will arbitrarily be the left path of the root
-			return 1 + self.left.height() #COMPL: O(log n)
-		elif rightSize > leftSize:
-			return 1 + self.right.height() #COMPL: O(log n)
-		else:
-			return 0 #COMPL: O(1)
+	  #represents the root value (size is always at least one)
+	  total = 1 #COMPL: O(1)
+	  if self.left is not None:
+	    total += self.left.size() #COMPL: O(n)
+	  if self.right is not None:
+	    total += self.right.size() #COMPL: O(n)
+	  return total #COMPL: O(1)
+	
+	#Return the number of elements in the longest branch of the tree.
+	def height(self): #TOTAL COMPL: O(n^2)
+	  if self.value is None:
+	    return 0 #COMPL: O(1)
+	  else:
+	    return 1 + max(self.left.height(), self.right.height()) #COMPL: O(n^2)
 
 # Return True if search_val is contained in this tree's contained values, or False otherwise.
 # Implement this recursively with an O(log n) algorithm. Think of your "base" and "recursive" cases.
@@ -131,9 +122,11 @@ class BinaryTree(object):
 		if current == search_val:
 			return True #COMPL: O(1)
 		if search_val <= current:
-			self.left.contains(search_val, current=self.left) #COMPL: O(log n)
+		  current = self.left
+		  return self.left.contains(search_val) #COMPL: O(log n)
 		if search_val >= current:
-				self.right.contains(search_val, current=self.right) #COMPL: O(log n)
+		  current = self.right
+		  return self.right.contains(search_val) #COMPL: O(log n)
 
 # Insert the `val` in this Binary Tree. Think recursively: if the `left` and `right` are
 # taken, then we'll need to "pass" the `val` down the tree. Additionally, implement this
@@ -145,12 +138,12 @@ class BinaryTree(object):
 		if val <= self.value:
 			#iterate until you reach leaf, then insert val
 			if self.left == None: 
-				self.left = val #COMPL: O(1)
+				self.left = BinaryTree(val) #COMPL: O(1)
 			else: self.left.insert(val) #COMPL: O(log n)
 		if val > self.value:
 			#iterate until you reach leaf, then insert val
 			if self.right == None:
-				self.right = val #COMPL: O(1)
+				self.right = BinaryTree(val) #COMPL: O(1)
 			else: self.right.insert(val) #COMPL: O(log n)
 
 
@@ -186,12 +179,12 @@ class Tree(object):
 		if self.value == []:
 			return 0 #COMPL: O(1)
 		else:
-			size += 1 #COMPL: O(1)
 			if self.children == []:
-				return 1 #COMPL: O(1)
+			  return 1 #COMPL: O(1)
 			else:
 				for c in self.children: #COMPL: O(n)
-					return 1 + c.size() #COMPL: O(n)
+					treeSum = 1 + c.size() #COMPL: O(n)
+				return treeSum #COMPL: O(1)
 
 # Return the number of elements in the longest branch of the tree.
 	def height(self): #TOTAL COMPL: O(n^2)
@@ -202,29 +195,37 @@ class Tree(object):
 		else:
 			for c in self.children: #COMPL: O(n)
 				if not c.size == 1:
-					return 1 + c.height() #COMPL: O(n)
+					treeHeight = 1 + c.height() #COMPL: O(n)
+				else:
+				  treeHeight += 1 #COMPL: O(1)
+			return treeHeight #COMPL: O(1)
 
 # Return True if the `search_val` exists somewhere in the tree or False otherwise.
 	def contains(self, search_val): #TOTAL COMPL: O(n^2)
 		if self.value == search_val:
-			return True #COMPL: O(1)
+			doesContain = True #COMPL: O(1)
 		else:
 		  for c in self.children: #COMPL: O(n)
 			  if c == search_val:
-				  return True #COMPL: O(1)
+				  doesContain = True #COMPL: O(1)
+				  break #COMPL: O(1)
 			  if not c.size == 1:
-				  c.contains(search_val) #COMPL: O(n)
-		  return False #COMPL: O(1)
+			    doesContain = False
+			    c.contains(search_val) #COMPL: O(n)
+		if not doesContain == True:
+		  return doesContain #COMPL: O(1)
 
 # Return the Tree that contains a certain `search_val`. If it doesn't exist, return None.
 	def get_by_value(self, search_val): #TOTAL COMPL: O(n^2)
 		if bool(self.value.contains(search_val)) == True:
 			if self.value == search_val:
-				return 1 #Height of tree containing search value COMPL: O(1)
+				return BinaryTree(self.value) #COMPL: O(1)
 			if not self.children == []:
 			  for c in self.children: #COMPL: O(n)
 			    if not c == search_val:
-			      return 1 + c.get_by_value(search_val) #COMPL: O(n)
+			      c.get_by_value(search_val) #COMPL: O(n)
+			    else:
+			      return BinaryTree(c)
 		else:
 		  return None #COMPL: O(1)
 
@@ -273,8 +274,8 @@ def run_animal_tree_tests():
 	assert not animals.contains("Steve Buscemi")
 	assert animals.size() == 13
 	assert animals.height() == 3
-	animals.get_by_value("Mammals").add(Tree("Elephant"))
-	animals.get_by_value("Human").add(Tree("Steve Buscemi"))
+	animals.get_by_value("Mammals").insert(Tree("Elephant"))
+	animals.get_by_value("Human").insert(Tree("Steve Buscemi"))
 	assert animals.contains("Steve Buscemi")
 	assert animals.get_by_value("Steve Buscemi").is_leaf()
 	assert animals.contains("Shark")
@@ -282,7 +283,9 @@ def run_animal_tree_tests():
 	assert animals.height() == 4
 	print("Yay! All the Animal Tree tests passed!\n")
 
-#run_number_tree_tests()
-#run_animal_tree_tests()
+run_number_tree_tests()
+run_animal_tree_tests()
+
+# If you're really feeling a challenge, try to implement a Trie: https://en.wikipedia.org/wiki/Trie . ;-)
 
 # If you're really feeling a challenge, try to implement a Trie: https://en.wikipedia.org/wiki/Trie . ;-)
