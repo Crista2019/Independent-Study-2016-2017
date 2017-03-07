@@ -61,14 +61,17 @@ class Stack(object):
     #RECURSIVE CASE
     else:
       self.pop(index+1)
-      
-  def peek(self, index=0):
+  
+  def peek(self):
+         return self.items[len(self.items)-1]
+    
+  """def peek(self, index=0):
     size = len(self.data) - 1
     if index == size: #Again, top is the last data element, but it is easier to visualize LIFO that way. The last in is the last index value.
       return self.data[index]
       #RECURSIVE CASE
     else:
-      peek(index+1)
+      peek(index+1)"""
     
 test_stack = Stack()
 test_stack.is_empty()
