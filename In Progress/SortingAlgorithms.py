@@ -58,7 +58,7 @@ def quick_sort(array, start, end): #Computational Complexity: O(n log n)
   if start < end:
     pivot = partition(array, start, end)
     quick_sort(array, start, pivot-1)
-    quick_sort(array,pivot+1 end)
+    quick_sort(array,pivot+1, end)
 
 def partition(array, start, end):
   pivot = array[start]
@@ -94,8 +94,8 @@ def merge_sort(array): #Computational Complexity: O(n log n)
 
     i,j,k= 0,0,0
 
-    while i < len(left) and j  len(right):
-      if left[i]  right[i]:
+    while i < len(left) and j < len(right):
+      if left[i]  > right[i]:
         array[k] = left[i]
         i += 1
       else:
@@ -111,12 +111,12 @@ def merge_sort(array): #Computational Complexity: O(n log n)
     while j < len(right):
       array[k] = right[j]
       j += 1
-      k == 1
+      k += 1
 
 def run_sorting_tests():
   import random, time
   num_elements = 1000
-  print "Running tests using {} elements...".format(num_elements)  
+  print("Running tests using {} elements...").format(num_elements)  
   for sorter in [bubble_sort, insertion_sort, selection_sort, quick_sort, merge_sort]:
     try:
       t_start = time.time()
@@ -125,14 +125,41 @@ def run_sorting_tests():
       sorter(array)
       t_end = time.time()
       assert array == sorted(array)
-      print "Woohoo! `{}` completed in {} seconds.".format(sorter.__name__, t_end-t_start)
+      print("Woohoo! `{}` completed in {} second").format(sorter.__name__, t_end-t_start)
     except Exception as e:
-      print "Uh oh! The sorting function `{}` isn't correct.".format(sorter.__name__)
+      print("Uh oh! The sorting function `{}` isn't correct.").format(sorter.__name__)
       raise e
 
 run_sorting_tests()
 
 """
-Up next... read about min-heaps and max-heaps!
+COMPARING "COMPARISON" SORTING ALGORITHMS:
+Selection Sort: 
+  ~unstable
+  ~inplace
+  ~running time: O(N^2)
+  ~extra space: 1
+Insertion Sort:
+  ~stable 
+  ~inplace
+  ~running time: O(N) to O(N^2)
+  ~extra space: 1
+  ~*depends on order of input keys
+Quick Sort:
+  ~unstable
+  ~inplace
+  ~running time: O(NlgN)
+  ~*Probabilistic guarantees, depend on distribution of input key values
+Merge Sort:
+  ~stable
+  ~not inplace
+  ~running time: O(NlgN) 
+Bubble Sort:
+  ~stable
+  ~space: O(1)
+  ~time: O(N^2)
 """
 
+"""
+Up next... read about min-heaps and max-heaps!
+"""
