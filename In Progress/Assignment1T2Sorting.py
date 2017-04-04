@@ -24,6 +24,7 @@ TASK: Think briefly about when you might prefer each sorting algorithm over the 
 #Bubble - rearrange pairs of elements which are out of order, until no such pairs remain.
 def bubble_sort(array): #Computational Complexity: O(n^2)
   for val in range(len(array)-1,0,-1):
+    #print(val)
     for i in range (val):
       if array[i] > array[i+1]:
         placeholder = array[i]
@@ -37,7 +38,7 @@ def insertion_sort(array): #Computational Complexity: O(n^2)
     place = i
 
     while place > 0 and array[place-1] > currentIndex:
-      array[place] = a[place-1]
+      array[place] = array[place-1]
       place -= 1
 
     array[place] = currentIndex      
@@ -54,66 +55,51 @@ def selection_sort(array): #Computational Complexity: O(n^2)
     array[maxIndex] = placeholder
 
 #Quick - divide and conquer algorithm which based on a partition operation, elements < partition element and > partition element are sorted seperately
-def quick_sort(array, start, end): #Computational Complexity: O(n log n)
-  if start < end:
-    pivot = partition(array, start, end)
-    quick_sort(array, start, pivot-1)
-    quick_sort(array,pivot+1, end)
+def quick_sort(array): #Computational Complexity: O(n log n)
+    less = []
+    equal = []
+    greater = []
 
-def partition(array, start, end):
-  pivot = array[start]
-  left = start + 1
-  right = end
-  done = False
-  while not done:
-    while left <= right and array[left] <= pivot:
-      left += 1
-    while array[right] >= pivot and right >= left:
-      right -= 1
-    if right < left:
-      done = True
-    else: 
-      #Swapping left and right
-      placeholder = array[left]
-      array[left] = array[right]
-      array[right] = placeholder
-    placeholder = array[start]
-    array[start] = array[right]
-    array[right] = placeholder
+    if len(array) > 1:
+        pivot = array[0]
+        for x in array:
+            if x < pivot:
+                less.append(x)
+            if x == pivot:
+                equal.append(x)
+            if x > pivot:
+                greater.append(x)
+        # Don't forget to return something!
+        return quick_sort(less)+equal+quick_sort(greater)
+    else:
+        return array
 
 #Merging - Two sorted lists can be easily combined to form a sorted list.
-def merge_sort(array): #Computational Complexity: O(n log n)
-  #Dividing array
-  if len(array) > 1:
-    partition = len(array)//2
-    left = array[:partition]
-    right = array[partition:]
-
-    merge_sort(left) #Recuuuursssion
-    merge_sort(right)
-
-    i,j,k= 0,0,0
-
-    while i < len(left) and j < len(right):
-      if left[i]  > right[i]:
-        array[k] = left[i]
-        i += 1
-      else:
-        array[k] = right[j]
-        j += 1
-      k += 1
-
-    while i < len(left):
-      array[k] = left[j]
-      i += 1
-      k += 1
-
-    while j < len(right):
-      array[k] = right[j]
-      j += 1
-      k += 1
-
-def run_sorting_tests():
+def merge(left,right):
+    newArray = []
+    while len(left) != 0 and len(right) != 0:
+        if left[0] < right[0]:
+            newArray.append(left[0])
+            left.remove(left[0])
+        else:
+            newArray.append(right[0])
+            right.remove(right[0])
+    if len(left) == 0:
+        newArray += right
+    else:
+        newArray += left
+    return newArray
+    
+def merge_sort(array):#Computational Complexity: O(n log n)
+    if len(array) == 0 or len(array) == 1:
+      pass
+    else:
+      middle = int(len(array)/2)
+      left = merge_sort(array[0:middle])
+      right = merge_sort(array[middle:len(array)])
+      return merge(left,right)
+            
+"""def run_sorting_tests():
   import random, time
   num_elements = 1000
   print("Running tests using {} elements...").format(num_elements)  
@@ -130,7 +116,14 @@ def run_sorting_tests():
       print("Uh oh! The sorting function `{}` isn't correct.").format(sorter.__name__)
       raise e
 
-run_sorting_tests()
+run_sorting_tests()"""
+testArray = [1, 2, 6, 8, 10, 2, 5, 8, 100, 7]
+bubble_sort(testArray)
+insertion_sort(testArray)
+selection_sort(testArray)
+quick_sort(testArray)
+merge_sort(testArray)
+
 
 """
 COMPARING "COMPARISON" SORTING ALGORITHMS:
