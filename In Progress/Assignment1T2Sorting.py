@@ -55,7 +55,7 @@ def selection_sort(array): #Computational Complexity: O(n^2)
     array[maxIndex] = placeholder
 
 #Quick - divide and conquer algorithm which based on a partition operation, elements < partition element and > partition element are sorted seperately
-def quick_sort(array): #Computational Complexity: O(n log n)
+def quick_sort_helper(array): #Computational Complexity: O(n log n)
     less = []
     equal = []
     greater = []
@@ -70,10 +70,25 @@ def quick_sort(array): #Computational Complexity: O(n log n)
             if x > pivot:
                 greater.append(x)
         # Don't forget to return something!
-        return quick_sort(less)+equal+quick_sort(greater)
+        return quick_sort_helper(less)+equal+quick_sort_helper(greater)
     else:
         return array
+        
+def quick_sort(array):
+    sorted_array = quick_sort_helper(array)
+    
+    #Now that we have the sorted array, let's assign each value in our array:
+    for i in range(len(array)):
+        array[i] = sorted_array[i]
+        
+"""        
+CASEY: Your implementation of quick_sort is good! Though it "returns" the new array
+rather than changing the original array itself. You can get around this by turning
+your function above into a "helper" function and then by having the "main" quick_sort
+function just call that. I've made that change above. :-)
+"""
 
+"""
 #Merging - Two sorted lists can be easily combined to form a sorted list.
 def merge(left,right):
     newArray = []
@@ -98,10 +113,46 @@ def merge_sort(array):#Computational Complexity: O(n log n)
       left = merge_sort(array[0:middle])
       right = merge_sort(array[middle:len(array)])
       return merge(left,right)
+"""
+
+def merge_sort_helper(array):
+    if len(array) < 2:
+        return array
+    else:
+      # Cut the list in half and sort both halves....
+      left_half = merge_sort_helper(array[:len(array)/2])
+      right_half = merge_sort_helper(array[len(array)/2:])
+      
+      # Go through both halves and keep picking off the smaller value...
+      sorted_array = []
+      while(left_half and right_half):
+          if left_half[0] < right_half[0]:
+              sorted_array.append(left_half.pop(0))
+          else:
+              sorted_array.append(right_half.pop(0))
+      
+      # If there's any leftover, let's add it.
+      if left_half:
+          sorted_array += left_half
+      elif right_half:
+          sorted_array += right_half
+
+      # Return the sorted array!
+      return sorted_array
+      
+
+def merge_sort(array):
+    sorted_array = merge_sort_helper(array)
+    
+    #Now that we have the sorted array, let's assign each value in our array:
+    for i in range(len(array)):
+        array[i] = sorted_array[i]    
+    
             
-"""def run_sorting_tests():
+print quick_sort([3,1,2,1,2,3])
+def run_sorting_tests():
   import random, time
-  num_elements = 1000
+  num_elements = 3000
   print("Running tests using {} elements...").format(num_elements)  
   for sorter in [bubble_sort, insertion_sort, selection_sort, quick_sort, merge_sort]:
     try:
@@ -115,14 +166,7 @@ def merge_sort(array):#Computational Complexity: O(n log n)
     except Exception as e:
       print("Uh oh! The sorting function `{}` isn't correct.").format(sorter.__name__)
       raise e
-
-run_sorting_tests()"""
-testArray = [1, 2, 6, 8, 10, 2, 5, 8, 100, 7]
-bubble_sort(testArray)
-insertion_sort(testArray)
-selection_sort(testArray)
-quick_sort(testArray)
-merge_sort(testArray)
+run_sorting_tests()
 
 
 """
@@ -135,7 +179,7 @@ Selection Sort:
 Insertion Sort:
   ~stable 
   ~inplace
-  ~running time: O(N) to O(N^2)
+  ~running time: O(N) to O(N^2) #CASEY: Usually we just care about the "worst" case -- so we'll call this O(N^2)
   ~extra space: 1
   ~*depends on order of input keys
 Quick Sort:
