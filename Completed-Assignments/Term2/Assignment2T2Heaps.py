@@ -64,3 +64,14 @@ class BinaryHeap:
 		self.heapList.pop()
 		self.percDown(1)
 		return removedVal
+
+"""
+COMPUTATIONAL COMPLEXITIES:
+binary heap implementation
+
+	enqueue and dequeue are both equal to O(log n)
+
+	  insert  	  deleteMin    remove  	  findMin  
+ 	  O(log n)	  O(log n)	   O(log n)	  O(1)
+
+"""
