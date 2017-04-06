@@ -149,7 +149,7 @@ def merge_sort(array):
         array[i] = sorted_array[i]    
     
             
-print quick_sort([3,1,2,1,2,3])
+print(quick_sort([3,1,2,1,2,3]))
 def run_sorting_tests():
   import random, time
   num_elements = 3000
