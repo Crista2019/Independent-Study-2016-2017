@@ -12,14 +12,27 @@ def shortest_path(start_node, end_node, graph):
 	to_visit = [current] #List of nodes to visit
 	visited = set() #Set of nodes that have already been visited
 	
+	#PRINT TEST
+	i = 0
+	for x in [current,to_visit,visited]:
+	  thing = ["current", "to_visit", "visited"]
+	  print("start",thing[i],":",x)
+	  i = i+1
+	
 	#Set the distance value from start to start to be 0 because the start ode is current
 	dist_from_start = {start_node: 0}
 	tent_parents = {} #Tuple of tentative (changing) parent elements
+	
+	#PRINT TEST
+	print (dist_from_start, tent_parents)
 
 	while len(to_visit) > 0:
 		#Node with the smallest weight should be the next node (ALSO, FINALLY A WAY TO APPLY LIST COMPREHENSION)
 		current = min([(dist_from_start[val], val) for val in  to_visit])[1]
-
+		
+		#PRINT TEST
+		print("current:",current)
+		
 		if current == end_node:
 			break
 
@@ -31,26 +44,49 @@ def shortest_path(start_node, end_node, graph):
 		#Values that are included both in edges and in visited aren't useful here, 
 		#So neighbors that HAVENT been visited are equal to a set of unvisited values (those NOT in visited)
 		unvisited = set(edges).difference(visited) 
-
+		
+		#PRINT TEST
+		print("edges:", edges)
+		print("unvisted nodes:",unvisited)
+    
+    
 		for neighbor in unvisited:
 			neighbor_dist = dist_from_start[current] + edges[neighbor]
+			
+			#PRINT TEST
+			print("distance from start to edge neighbor:", neighbor_dist)
+			
 			#If the distance from start to the neighbor is less than infinity ('inf' occurs if there is no connection b/w start and the remaining unvisited nodes)
 			if neighbor_dist < dist_from_start.get(neighbor_dist, float('inf')):
 				dist_from_start[neighbor] = neighbor_dist
 				tent_parents[neighbor] = current
 				to_visit.append(neighbor) #Ultimately, a neighbor element is put in line to be visited IF there is a connection to the start node
+	print("PATH DISTANCE:",neighbor_dist,"SHORTEST PATH:", deconstruct_path(tent_parents, end_node))
+	return [neighbor_dist, deconstruct_path(tent_parents, end_node)]
 
-	return deconstruct_path(tent_parents, end_node)
-
-def deconstruct_path(tent_parents, end_node):
+def deconstruct_path(tent_parents, end_node, time=0): #TIME IS FOR PRINT TEST AND DOES NOTHING USEFUL
 	if end_node not in tent_parents:
 		return None
 	goal = end_node
+	
+	#PRINT TEST
+	print("IN deconstruct_path HELPER FUNCTION NOW!")
+	print("end node goal:", goal)
+	
 	path = []
 	while goal:
 		path.append(goal)
 		goal = tent_parents.get(goal)
-	return list(path[::-1])
+		#PRINT TEST
+		i = 0
+		time += 1
+		things = ["path", "goal"]
+		for x in [path,goal]:
+		  print (things[i],"during loop #",time,":", x)
+		  i += 1
+	deconstructed_node_path = list(path[::-1])
+	print("What is fed back to main function:", deconstructed_node_path)
+	return deconstructed_node_path
 
 
 def small_test():
@@ -86,11 +122,10 @@ def complex_test():
   }
   assert [445, ["SEA", "LAX", "FLL"]] == shortest_path("SEA", "FLL", test_graph)
 
-
 for test in [small_test, medium_test, complex_test]:
   test()
-  print("Woo! {} passes!\n").format(test.__name__)
-
+  #print("Woo! {} passes!\n").format(test.__name__)
+  
 """
 Dijkstra's algorithm to find the shortest path between a and b. It picks the unvisited vertex with the lowest distance, calculates the distance through it to each unvisited neighbor, and updates the neighbor's distance if smaller. Mark visited (set to red) when done with neighbors.
 Class:	Search algorithm
