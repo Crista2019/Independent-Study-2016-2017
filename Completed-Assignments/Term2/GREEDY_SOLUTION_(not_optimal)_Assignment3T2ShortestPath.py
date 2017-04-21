@@ -7,6 +7,7 @@ Dijkstra's Algorithm: http://www.geeksforgeeks.org/greedy-algorithms-set-6-dijks
 """
 
 print("This algorithm is GREEDY, so it will take the first minimal path it finds locally. Globally, this algorithm will likely not be optimal since the edge weight from one node to another compared to that of the other's neighbors do not always indicate which child node will be used in an OVERALL lesser cost from start to end. The she shortest path from one node to the next may seem like a good option, but the path may redirect you to a series of other nodes, which adds additional weights before you reach the end node. This means that it may or may NOT result in the shortest path.")
+print("Thus, here we have an ineffective method that will display 'a' path, just not the cheapest costing path overall")
 
 def shortest_path(start_node, end_node, graph):
 	#Visit the starting node of the weighted graph to begin
