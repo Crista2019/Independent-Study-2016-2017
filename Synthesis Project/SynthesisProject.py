@@ -162,12 +162,17 @@ def playerIcon10():
 
 maps = []
 
+campains = []
+
 def printAllMaps():
   for x in range(0, len(maps)):
     print(maps[x].name)
 
 def displayPartyMembers():
-  print("Party:", players, "(Party size: {})".format(Player.teamCount))
+  print("Party:")
+  for x in range(0, len(players)):
+    print(players[x].name,)
+  print("Party size: {}".format(Player.teamCount))
 
 def createNewPlayer():
   if input("Do you wish to create a new player? (y/n)").lower() == 'y':
@@ -195,7 +200,7 @@ def createNewPlayer():
     print('\n')
     players[n-1].displayCharacter()
     print(name, " will be refered to as players[{}].".format(n))
-    print("At any time, call players[number].displayCharacter() to check your player's stats. Make sue to start at 0!")
+    print("At any time, call players[number].displayCharacter() to check your player's stats. Make sure to start at 0!")
 
   else:
     print("Ok. New player request terminated")
@@ -269,23 +274,25 @@ def createNewCampain():
     value1 = input("What is one possible quest that branches from this incident?")
     value2 = input("What is another possible quest that branches from this incident?")
     
-    campain = Quest(root)
-    campain.insert_left(value1)
-    campain.insert_right(value2)
+    l = len(campains)
+    campains.append(Quest(root))
+    
+    campains[l].insert_left(value1)
+    campains[l].insert_right(value2)
     
     if input("Do you have any further quests to add at this time? (y/n)") == 'y':
       add_quest = True
       
       while add_quest:
         if input("Does this quest result from the left or right option? (l/r)") == 'l':
-          campain.quest_choice_left.insert_left(input("What is the first choice?"))
-          campain.quest_choice_left.insert_right(input("what is the second choice?"))
+          campains[l].quest_choice_left.insert_left(input("What is the first choice?"))
+          campains[l].quest_choice_left.insert_right(input("what is the second choice?"))
         else:
-          campain.quest_choice_right.insert_left(input("What is the first choice?"))
-          campain.quest_choice_right.insert_right(input("what is the second choice?"))
+          campains[l].quest_choice_right.insert_left(input("What is the first choice?"))
+          campains[l].quest_choice_right.insert_right(input("what is the second choice?"))
         if input("Continue adding quests? (y/n)") =="n":
           add_quest = False
-      print("Ok. ", name, " has been created. Check the status of your quest progression by calling campain.print_quests(root)")
+    print("Ok.", name, " has been created. Check the status of your quest progression by calling campains[number].print_quests(inciting incident)", "\n", "Change the quest order or add new quests by calling campains[number].quest_choice_right.insert_left('quest'), etc")
   else:
     print("Ok. New campain request terminated.")
 
@@ -299,7 +306,7 @@ class Player(object):
 		  
 		  self.race = input("Choose your race. (human, elf, dwarf, halfling, gnome, half-orc)").lower()
 		  
-		  self.icon = input("Choose one of ten player icons [playerIcon1(), playerIcon6(), etc]")
+		  #self.icon = input("Choose one of ten player icons [playerIcon1(), playerIcon6(), etc]")
 		  
 		  if self.race not in possible_races:
 		    self.race = input("Please choose a valid race.")
@@ -341,7 +348,8 @@ class Player(object):
 			print("Class: ", self.character_class)
 			print("Race: ", self.race)
 			#return self.icon
-			print("Member of party:", players, "(Party size: {})".format(Player.teamCount))
+			displayPartyMembers()
+			#print("Member of party:", players, "(Party size: {})".format(Player.teamCount))
 		
 
 #http://www.python-course.eu/python3_inheritance.php FOR ADDING DIFFERENT PLAYER CLASSES AND RACES IF TIME ALLOWS
@@ -416,10 +424,8 @@ class Map(object):
   def is_connected(self, node1, node2):
     # Is node1 directly connected to node2
     return node1 in self._graph and node2 in self._graph[node1]
-
   def find_path(self, node1, node2, path=[]):
   #Find any path between node1 and node2 (may not be shortest) 
-
     path = path + [node1]
     if node1 == node2:
       return path
@@ -448,12 +454,10 @@ class Quest(object):
     self.quest_choice_right = Quest(val)
     return self.quest_choice_right
   
-  def print_quests(self, root):
-    if not root:
-        return        
-    print(root.data)
-    self.print_quests(root.quest_choice_left)
-    self.print_quests(root.quest_choice_right)
+  def print_quests(self, val):
+    print(self.data)
+    self.print_quests(self.data.quest_choice_left)
+    self.print_quests(self.data.quest_choice_right)
     
 """
 me = Player("Crista")
@@ -487,7 +491,6 @@ print("            `  `                                     ")
 
 
 """
-
 class Dog(object):
   def __init__(self, name, size, cute):
     self.name = name
@@ -501,22 +504,16 @@ class Dog(object):
     return self.name
   
 dogs = []
-
 def add_dog(name, size, cute):
   dogs.append( Dog(name, size, cute) )
-
 for name in ["Bill", "Frank", "Trogdor", "Hercules", "Betty"]:
   add_dog(name, 10, True)
-
 dogs[0] # Player 1
 dogs[1] # Player 2
 dogs[2] # Player 3, etc.
-
 ####### ####### ####### ####### ####### #######
-
 for ITEM in THINGS:
   # ...
-
 for (a,b) in [(C,D)]:
   # ...
   
@@ -526,15 +523,10 @@ for (a,b) in (C,D):
 def do_something(tup):
   my_dict = {}
   my_dict[tup[0]] = tup[1]
-
 def do_something(a, b):
   # ...
-
 do_something(*(a,b))
-
-
 ####### ####### ####### ####### ####### #######
-
 class BinaryTree(object):
   def __init__(self, val):
     self.val = val
@@ -557,7 +549,6 @@ tree.left.insert_left("Shnouzer")
 tree.left.insert_right("Poodle")
 tree.left.right.insert_left("Golden Doodlie thing.")
 print tree.left.right.left.val
-
               Animals
               /    \
             Dog     Cat
@@ -565,8 +556,5 @@ print tree.left.right.left.val
      Shnouzer  Poodle
                 /
           Golden Doodlie Thing
-
-
 print tree #Expect "Animals(Dog( ... ), Cat(None, None))
-
 """
