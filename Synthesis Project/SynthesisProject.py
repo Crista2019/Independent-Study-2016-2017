@@ -37,7 +37,9 @@ def help():
   
   print('\n')
   
-  print("createNewCampain():", '\n', "Function; Create a campain by adding potential quest branches that emulate a 'choose your own adventure' style structure, primarily to assist the dungeon master through DMing")
+  
+  
+  print("createNewCampain():", '\n', "Function; Create a campaign by adding potential quest branches that emulate a 'choose your own adventure' style structure, primarily to assist the dungeon master through DMing")
   
   print('\n')
   
@@ -160,9 +162,12 @@ def playerIcon10():
   print("      'u'")
   print('\n')
 
+icons = (playerIcon1, playerIcon2, playerIcon3, playerIcon4, playerIcon5, playerIcon6, playerIcon7, playerIcon8, playerIcon9, playerIcon10)
+
 maps = []
 
-campains = []
+campaigns = []
+campaign_names = {}
 
 def printAllMaps():
   for x in range(0, len(maps)):
@@ -173,6 +178,10 @@ def displayPartyMembers():
   for x in range(0, len(players)):
     print(players[x].name,)
   print("Party size: {}".format(Player.teamCount))
+  
+def printAllCampaigns():
+  for x in range(0, len(campaign_names)):
+    print(campaign_names[x])
 
 def createNewPlayer():
   if input("Do you wish to create a new player? (y/n)").lower() == 'y':
@@ -192,16 +201,15 @@ def createNewPlayer():
     print("           \_'_'_\/")
     print('\n')
     
-    
     n = len(players)
     players.append(Player(name))
+    print('\n')
     players[n].init_inventory()
     print('\n')
-    print('\n')
     players[n-1].displayCharacter()
-    print(name, " will be refered to as players[{}].".format(n))
-    print("At any time, call players[number].displayCharacter() to check your player's stats. Make sure to start at 0!")
-
+    
+    print(name, " will be refered to as players[{}]".format(n))
+    print("At any time, call players[number].displayCharacter() to check a player's stats. Make sure to start at 0!")
   else:
     print("Ok. New player request terminated")
   
@@ -243,8 +251,10 @@ def createNewMap():
     print('\n')
     print("To add additional stops at any time, call maps[number].addStop('town name', 'connecting town name')")
     
+    print("To learn information about a specific map, call maps[map number].printMap()")
+    
     print('\n')
-    print("To remove stops at any time, call maps[number].remove(town)")
+    print("To remove stops at any time, call maps[number].remove('town name')")
     
     print('\n')
     print("To print a working list of all maps, call printAllMaps()")
@@ -252,9 +262,9 @@ def createNewMap():
   else:
     print("Ok. New map request terminated.")
   
-def createNewCampain():
-  if input("Do you wish to create a new campain? (y/n)").lower() == 'y':
-    print("New campain request granted.")
+def createNewCampaign():
+  if input("Do you wish to create a new campaign? (y/n)").lower() == 'y':
+    print("New campaign request granted.")
     
     print("    ,-----------.")
     print("   (_\           \ ")
@@ -268,33 +278,49 @@ def createNewCampain():
     print("              ) ) ")
     print("              ^ ^")
     
-    name = input("What shall the title of this campain be?")
-    root = input("What is the inciting incident of the campain?")
+    name = input("What shall the title of this campaign be?")
+    root = input("What is the inciting incident of the campaign?")
     
     value1 = input("What is one possible quest that branches from this incident?")
     value2 = input("What is another possible quest that branches from this incident?")
     
-    l = len(campains)
-    campains.append(Quest(root))
+    l = len(campaigns)
+    campaign_names[Quest(root)]: campaign
+    campaigns.append(Quest(root))
     
-    campains[l].insert_left(value1)
-    campains[l].insert_right(value2)
+    campaigns[l].insert_left(value1)
+    campaigns[l].insert_right(value2)
     
     if input("Do you have any further quests to add at this time? (y/n)") == 'y':
       add_quest = True
       
       while add_quest:
-        if input("Does this quest result from the left or right option? (l/r)") == 'l':
-          campains[l].quest_choice_left.insert_left(input("What is the first choice?"))
-          campains[l].quest_choice_left.insert_right(input("what is the second choice?"))
-        else:
-          campains[l].quest_choice_right.insert_left(input("What is the first choice?"))
-          campains[l].quest_choice_right.insert_right(input("what is the second choice?"))
-        if input("Continue adding quests? (y/n)") =="n":
+        value1a = input("What is one resulting quest from '{}'?".format(value1))
+        campaigns[l].left_choice.insert_left(value1a)
+        
+        value1b = input("what is the second possible quest to choose resulting from '{}'?".format(value1))
+        campaigns[l].left_choice.insert_right(value1b)
+        
+        value2a = input("Now, what is one resulting quest from '{}'?".format(value2))
+        campaigns[l].right_choice.insert_left(value2a)
+        
+        value2b = input("what is the second possible quest to choose resulting from '{}'?".format(value2))
+        campaigns[l].right_choice.insert_right(value2b)
+        
+        if input("Continue adding quests? (y/n)") =="y
+          campaigns[l].left_choice.left_choice.insert_left(input("What is one resulting quest from '{}'?".format(value1a)))
+          campaigns[l].left_choice.left_choice_choice.insert_right(input("what is the second possible quest to choose resulting from '{}'?".format(value1b)))
+          
+          campaigns[l].left_choice.right_choice.insert_left(input("What is one resulting quest from '{}'?".format(value2a)))
+          campaigns[l].left_choice.right_choice.insert_right(input("what is the second possible quest to choose resulting from '{}'?".format(value2b)))
           add_quest = False
-    print("Ok.", name, " has been created. Check the status of your quest progression by calling campains[number].print_quests(inciting incident)", "\n", "Change the quest order or add new quests by calling campains[number].quest_choice_right.insert_left('quest'), etc")
+        else:
+          add_quest = False
+    print("Ok.", name, " has been created. Check the status of your quest progression by calling campaigns[number].print_quests(inciting incident)", "\n", "Change the quest order or continue adding new quests by calling campaigns[number].right_choice.insert_left('quest'), for example")
+    print("\n")
+    print("To print all existing campaigns, call printAllCampaigns()")
   else:
-    print("Ok. New campain request terminated.")
+    print("Ok. New campaign request terminated.")
 
 class Player(object):
 		'Common base class for all players'
@@ -317,7 +343,9 @@ class Player(object):
 		    self.character_class = input("Please choose a valid class.")
 		    
 		  self.stats = {"Strength": random.randint(3,18), "Constitution": random.randint(3,18), "Dexterity": random.randint(3,18), "Intelligence": random.randint(3,18), "Wisdom": random.randint(3,18), "Charisma": random.randint(3,18)}
-	
+		  
+		  self.icon = icons[random.randint(0,9)]
+		  
 		  Player.teamCount += 1
 		  self.inventory = set()
 		
@@ -347,9 +375,9 @@ class Player(object):
 			self.displayInventory()
 			print("Class: ", self.character_class)
 			print("Race: ", self.race)
-			#return self.icon
+			print("\n")
 			displayPartyMembers()
-			#print("Member of party:", players, "(Party size: {})".format(Player.teamCount))
+			return self.icon()
 		
 
 #http://www.python-course.eu/python3_inheritance.php FOR ADDING DIFFERENT PLAYER CLASSES AND RACES IF TIME ALLOWS
@@ -411,7 +439,7 @@ class Map(object):
       self.stops[town] = connecting_town
       print("Modified map of", self.name, self.stops)
     else:
-      print("The", self.name, "is LOCKED. DM must reset the value of self.locked to True to unlock!")
+      print("The", self.name, "is LOCKED. DM must unlock this map by calling maps[map numer].unlockMap() to access it!")
 
   def remove(self, node):
     if self.locked != False:
@@ -420,44 +448,28 @@ class Map(object):
       if node in self.stops: 
         del self.stops[node]
 
-"""
-  def is_connected(self, node1, node2):
-    # Is node1 directly connected to node2
-    return node1 in self._graph and node2 in self._graph[node1]
-  def find_path(self, node1, node2, path=[]):
-  #Find any path between node1 and node2 (may not be shortest) 
-    path = path + [node1]
-    if node1 == node2:
-      return path
-    if node1 not in self._graph:
-      return None
-    for node in self._graph[node1]:
-      if node not in path:
-          new_path = self.find_path(node, node2, path)
-      if new_path:
-        return new_path
-      return None
-"""
-
 class Quest(object):
   #binary tree
   def __init__(self, val):
-      self.quest_choice_left = None
-      self.quest_choice_right = None
+      self.left_choice = None
+      self.right_choice = None
       self.data = val
 
   def insert_left(self, val):
-    self.quest_choice_left = Quest(val)
-    return self.quest_choice_left
+    self.left_choice = Quest(val)
+    return self.left_choice
     
   def insert_right(self, val):
-    self.quest_choice_right = Quest(val)
-    return self.quest_choice_right
+    self.right_choice = Quest(val)
+    return self.right_choice
+    
+  def __str__(self):
+    return "{}({}, {})".format(self.val, self.left_choice, self.right_choice)
   
   def print_quests(self, val):
-    print(self.data)
-    self.print_quests(self.data.quest_choice_left)
-    self.print_quests(self.data.quest_choice_right)
+    print(val)
+    self.print_quests(self.data.left_choice)
+    self.print_quests(self.data.right_choice)
     
 """
 me = Player("Crista")
@@ -467,7 +479,7 @@ me.displayCharacter()
 """
 print("Welcome to Crista Falk's 'Dungeons and Dragons Python Interactive Gameplay Tool!'")
 print("At any point in the game, for assistance with commands, simply type help() into the Python prompt.")
-print("Why don't you start by creating a player, map, or campain by calling createNewPlayer(), etc?")
+print("Why don't you start by creating a player, map, or campaign by calling createNewPlayer(), etc?")
 
 print("                                               _   __,----'~~~~~~~~~`-----.__")
 print("                                        .  .    `//====-              ____,-'~`")
@@ -491,42 +503,6 @@ print("            `  `                                     ")
 
 
 """
-class Dog(object):
-  def __init__(self, name, size, cute):
-    self.name = name
-    self.size = size
-    self.cute = cute
-   
-  def bark(self):
-    print "Bark!"
-    
-  def getName(self):
-    return self.name
-  
-dogs = []
-def add_dog(name, size, cute):
-  dogs.append( Dog(name, size, cute) )
-for name in ["Bill", "Frank", "Trogdor", "Hercules", "Betty"]:
-  add_dog(name, 10, True)
-dogs[0] # Player 1
-dogs[1] # Player 2
-dogs[2] # Player 3, etc.
-####### ####### ####### ####### ####### #######
-for ITEM in THINGS:
-  # ...
-for (a,b) in [(C,D)]:
-  # ...
-  
-for (a,b) in (C,D):
-  # Oh noez!
-  
-def do_something(tup):
-  my_dict = {}
-  my_dict[tup[0]] = tup[1]
-def do_something(a, b):
-  # ...
-do_something(*(a,b))
-####### ####### ####### ####### ####### #######
 class BinaryTree(object):
   def __init__(self, val):
     self.val = val
