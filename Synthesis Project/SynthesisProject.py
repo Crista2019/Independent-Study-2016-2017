@@ -12,62 +12,135 @@ def help():
   print("Welcome to the help menu.")
   print("List of useful functions/methods to call and navigate this tool!:")
   print('\n')
-  
-  print("list_classes():", '\n', 'Fuction; Lists all possible classes that can be used in a typical D&D character.')
+  print("  __  __          _____  ")
+  print(" |  \/  |   /\   |  __ \ ")
+  print(" | \  / |  /  \  | |__) |")
+  print(" | |\/| | / /\ \ |  ___/ ")
+  print(" | |  | |/ ____ \| |     ")
+  print(" |_|  |_/_/    \_\_|     ")
   
   print('\n')
   
-  print("list_races():", '\n', "Function; Lists all possible races that can be used in a typical D&D character. ")
-  
-  print('\n')
-  
-  print('displayPartyMembers():', '\n', "Function; Prints all current members of a party. ")
+  print("Map():", '\n', "Class; contains basic map information as well as all the villages and connecting villages of a given map and methods for manipulating this data. Takes arguments for name, and what type of map (PRIMARY DATA STRUCTURE: GRAPH)")
   
   print('\n')
   
   print("printAllMaps():", '\n', "Function; prints all maps that have been created since the initializing the program.")
-      
-  print('\n')
-  
-  print("createNewPlayer():", '\n', "Function; One of the most useful tools to create a new player step by step.")
   
   print('\n')
   
-  print("createNewMap():", '\n', "Function; Interactive step-by-step map maker")
+  print("createNewMap():", '\n', "Function; interactive step-by-step map maker")
+  
+  print("\n")
+  
+  print(".lockMap(): \n Method; this locks a map, so it cannot be viewed or edited by the user")
+  
+  print('\n')
+  
+  print(".unlockMap(): \n Method; this unlocks a map to allow for viewing/changing privledges")
+    
+  print('\n')
+  
+  print(".addStop(stop name, connecting stop name): \n Method; adds additional stops to a given map, at any time")
+  
+  print('\n')
+  
+  print(".printMap(): \n Method; displays information about a specific map, including its locked/unlocked status, name, and stop nodes")
+    
+  print('\n')
+  
+  print(".remove('stop name'): \n Method; removes specific stops from a map at any time")
+    
+  print('\n')
+  
+  
+  print("  _____  _           __     ________ _____  ")
+  print(" |  __ \| |        /\\ \   / /  ____|  __ \ ")
+  print(" | |__) | |       /  \\ \_/ /| |__  | |__) |")
+  print(" |  ___/| |      / /\ \\   / |  __| |  _  / ")
+  print(" | |    | |____ / ____ \| |  | |____| | \ \ ")
+  print(" |_|    |______/_/    \_\_|  |______|_|  \_\ ")
+  
+  print('\n')
+  
+  print("Player(object):", '\n', "Class; contains data and methods for defining each player in a party. Takes argument for name (PRIMARY DATA STRUCTURE: Dictionary)")
+  
+  print('\n')
+  
+  print("list_classes():", '\n', 'Fuction; lists all possible classes that can be used in a typical D&D character.')
+  
+  print('\n')
+  
+  print("list_races():", '\n', "Function; lists all possible races that can be used in a typical D&D character. ")
+  
+  print('\n')
+  
+  print('displayPartyMembers():', '\n', "Function; prints all current members of a party. ")
+  
+  print('\n')
+  
+  print("createNewPlayer():", '\n', "Function; one of the most useful tools to create a new player step by step.")
+  
+  print('\n')
+  
+  print(".addItemToInventory(item):", '\n', "Method; used to ")
+  
+  print('\n')
+  
+  print(".checkForItem(item): \n Method; used to locate a given item in a player's inventory and verify whether it is there or not")
+  
+  print('\n')
+  
+  print(".displayInventory(): \n Method; displays a character's current inventory items")
+  
+  print('\n')
+  
+  print(".displayCharacter(): \n Method; displays information about a character, e.g. name, statistics, icon, inventory, party, etc")
+  
+  print('\n')
+  
+  print("   ____  _    _ ______  _____ _______ _____ ")
+  print("  / __ \| |  | |  ____|/ ____|__   __/ ____|")
+  print(" | |  | | |  | | |__  | (___    | | | (___  ")
+  print(" | |  | | |  | |  __|  \___ \   | |  \___ \ ")
+  print(" | |__| | |__| | |____ ____) |  | |  ____) |")
+  print("  \___\_\\____/|______|_____/   |_| |_____/ ")
+  
+  print('\n')
+  
+  print("Quest(object):", '\n', "Class; Takes argument for initial value (called root) contains methods (PRIMARY DATA STRUCTURE: BINARY TREE)")
+  
+  print('\n')
+  
+  print("createNewCampain():", '\n', "Function; creates a campaign by adding potential quest branches that emulate a 'choose your own adventure' style structure, primarily to assist the dungeon master through DMing")
+  
+  print('\n')
+  
+  print("printAllCampaigns():", '\n', "Function; prints each campaign that has been created since the initializing the program and points to its corresponding object as proof of the campaign's existence.")
+  
+  print('\n')
+  
+  print(".insert_left(new quest): \n Method; inserts a quest to the left of the previous quest. Should be called like so: \n \t campaigns[0].left_choice.right_choice.right_choice...insert_left(thing) so as not to override previous quests. \n \t To check the length of a given quest, you can call campaigns[5].print_quests()")
+  
+  print('\n')
+  
+  print(".insert_right(new quest): \n Method; inserts a quest to the right of the previous quest. See above for tips about use")
+  
+  print('\n')
+  
+  print(".print_quests(): \n Method; prints out the branches of a given quest in order to choice quest progression and options")
+  
+  print('\n')
+  
+  print("TIP: FUNCTIONS are called directly, like this: function(optional parameter)")
+  print("TIP: If you are typing input to respond to a question on the console, quotations are not needed (plain text works), but if you are calling a function with text, known as a string, as an argument, it must look like this: \n\t function('argument', 'argument2')")
+  print("TIP: METHODS are called by referencing the object you are accessing/editing, like this: \n\t Object.method('optional parameter')")
+  print("TIP: All objects created in a session are stored in a global list by category, so in order to call methods, you must reference their position in the list based on the order they were created in, starting at 0 for the first: \n\t example: players[0].doThing('arg') \n\t example: maps[8].doThing('arg') \n\t example: campaigns[3].doThing('arg')")
+  print("TIP: CLASSES are used to create objects with the same base attributes or type. You can create instances by calling name_of_object = Class(parameters), but you can also use one of the three createNew___() fuctions for 'Player', 'Map', or 'Campaign' to be guided along.")
   
   print('\n')
   
   
-  
-  print("createNewCampain():", '\n', "Function; Create a campaign by adding potential quest branches that emulate a 'choose your own adventure' style structure, primarily to assist the dungeon master through DMing")
-  
-  print('\n')
-  
-  print("Player(object):", '\n', "Class; contains data and methods for defining each player in a party.(PRIMARY DATA STRUCTURE: HASH MAP)")
-  
-  print('\n')
-  
-  print("Map(object):", '\n', "Class; contains basic map information as well as all the villages and connecting villages of a given map and methods for manipulating this data. (PRIMARY DATA STRUCTURE: GRAPH) ")
-  
-  print('\n')
-  
-  print("Quest(object):", '\n', "Class; contains methods (PRIMARY DATA STRUCTURE: BINARY TREE)")
-  
-  print('\n')
-  
-  print("", '\n', "")
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
 possible_classes = ["barbarian", "bard", "cleric", "druid", "fighter", "mage", "monk", "paladin", "ranger", "sorcerer", "rogue", "warlock"]
 
 def list_classes():
@@ -249,12 +322,12 @@ def createNewMap():
     print("By default, the map is initialized in the 'unlocked' setting. To change this, call maps[number].lockMap() or maps[number].unlockMap()")
     
     print('\n')
-    print("To add additional stops at any time, call maps[number].addStop('town name', 'connecting town name')")
+    print("To add additional stops at any time, call maps[number].addStop('stop name', 'connecting stop name')")
     
     print("To learn information about a specific map, call maps[map number].printMap()")
     
     print('\n')
-    print("To remove stops at any time, call maps[number].remove('town name')")
+    print("To remove stops at any time, call maps[number].remove('stop name')")
     
     print('\n')
     print("To print a working list of all maps, call printAllMaps()")
@@ -285,7 +358,7 @@ def createNewCampaign():
     value2 = input("What is another possible quest that branches from this incident?")
     
     l = len(campaigns)
-    campaign_names[Quest(root)]: campaign
+    campaign_names[l] = {name: Quest(root)}
     campaigns.append(Quest(root))
     
     campaigns[l].insert_left(value1)
@@ -307,16 +380,19 @@ def createNewCampaign():
         value2b = input("what is the second possible quest to choose resulting from '{}'?".format(value2))
         campaigns[l].right_choice.insert_right(value2b)
         
-        if input("Continue adding quests? (y/n)") =="y
+        if input("Continue adding quests? (y/n)") =="y":
           campaigns[l].left_choice.left_choice.insert_left(input("What is one resulting quest from '{}'?".format(value1a)))
-          campaigns[l].left_choice.left_choice_choice.insert_right(input("what is the second possible quest to choose resulting from '{}'?".format(value1b)))
+          campaigns[l].left_choice.left_choice.insert_right(input("what is the second possible quest to choose resulting from '{}'?".format(value1b)))
           
           campaigns[l].left_choice.right_choice.insert_left(input("What is one resulting quest from '{}'?".format(value2a)))
           campaigns[l].left_choice.right_choice.insert_right(input("what is the second possible quest to choose resulting from '{}'?".format(value2b)))
           add_quest = False
         else:
           add_quest = False
-    print("Ok.", name, " has been created. Check the status of your quest progression by calling campaigns[number].print_quests(inciting incident)", "\n", "Change the quest order or continue adding new quests by calling campaigns[number].right_choice.insert_left('quest'), for example")
+    print("\n")
+    print("Ok.", name, "has been created. Check the status of your quest progression by calling campaigns[number].print_quests()")
+    print('\n')
+    print("Change the quest order or continue adding new quests by calling campaigns[number].right_choice.insert_left('quest'), for example")
     print("\n")
     print("To print all existing campaigns, call printAllCampaigns()")
   else:
@@ -400,14 +476,12 @@ class Map(object):
     self.name = name
     self.what = what
     self.stops = {}
-    #Will look like {('Town A': 'Town B'), ('Town B', 'Town C'), etc...}
+    #Will look like {'Town A': 'Town B', 'Town B': 'Town C', etc...}
     #A SET of DICTIONARIES in which each value in the key is the town name and the value is the conecting town
     self._directed = directed
     self.locked = bool(locked)
     
     Map.mapCount += 1
-
-    #HERE IS WHERE I WILL ADD THE NODES THAT REPRESENT DIFFERENT VISITABLE LOCATION WITHIN THE MAP, AS WELL AS EDGES
     #THIS IS GOING TO BE IN THE FORM OF A UNDIRECTED, WEIGHTED GRAPH!
   def unlockMap(self):
     self.locked = False
@@ -428,13 +502,12 @@ class Map(object):
         add_stops = True
         while add_stops:
           town = input("What is the name of this stop?")
-          connecting_town = input("What town is {} connected to?".format(town))
+          connecting_town = input("What stop is {} connected to?".format(town))
           self.addStop(town, connecting_town)
           if input("Would you like to add another stop? (y/n)") == 'n':
             add_stops = False
   
   def addStop(self, town, connecting_town): 
-    #"stop" input should be in the form of a TUPLE then will be turned into a DICTIONARY; stop = (town, connecting_town) then code => {town: connecting_town}
     if self.locked == False:
       self.stops[town] = connecting_town
       print("Modified map of", self.name, self.stops)
@@ -464,12 +537,13 @@ class Quest(object):
     return self.right_choice
     
   def __str__(self):
-    return "{}({}, {})".format(self.val, self.left_choice, self.right_choice)
+    return "{}:({}, {})".format (self.data, self.left_choice, self.right_choice)
   
-  def print_quests(self, val):
-    print(val)
+  def print_quests(self):
+    print(self)
+    """print(val)
     self.print_quests(self.data.left_choice)
-    self.print_quests(self.data.right_choice)
+    self.print_quests(self.data.right_choice)"""
     
 """
 me = Player("Crista")
@@ -500,37 +574,3 @@ print("            <_n_                     __-^-_    `)  \-.______________,-~' 
 print("             `B'\)                  ///,-'~`__--^-  |-------~~~~^' ")
 print("             /^>                           ///,--~`-\ ")
 print("            `  `                                     ")
-
-
-"""
-class BinaryTree(object):
-  def __init__(self, val):
-    self.val = val
-    self.left = None
-    self.right = None
-   
-  def insert_left(self, val):
-    self.left = BinaryTree(val)
-    
-  def insert_right(self, val):
-    self.right = BinaryTree(val)
-  
-  def __str__(self):
-    return "{}({}, {})".format(self.val, self.left, self.right)
-    
-tree = BinaryTree("Animals")
-tree.insert_left("Dog")
-tree.insert_right("Cat")
-tree.left.insert_left("Shnouzer")
-tree.left.insert_right("Poodle")
-tree.left.right.insert_left("Golden Doodlie thing.")
-print tree.left.right.left.val
-              Animals
-              /    \
-            Dog     Cat
-           /   \
-     Shnouzer  Poodle
-                /
-          Golden Doodlie Thing
-print tree #Expect "Animals(Dog( ... ), Cat(None, None))
-"""
