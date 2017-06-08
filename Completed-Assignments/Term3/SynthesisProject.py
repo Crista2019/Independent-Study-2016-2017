@@ -144,13 +144,13 @@ def help():
 possible_classes = ["barbarian", "bard", "cleric", "druid", "fighter", "mage", "monk", "paladin", "ranger", "sorcerer", "rogue", "warlock"]
 
 def list_classes():
-	print(possible_classes)
+  print(possible_classes)
 
 possible_races = ["human", "elf", "dwarf", "halfling", "gnome", "half-orc"]
 
 def list_races():
-	print(possible_races)
-	
+  print(possible_races)
+  
 players = []
 
 def playerIcon1():
@@ -399,72 +399,61 @@ def createNewCampaign():
     print("Ok. New campaign request terminated.")
 
 class Player(object):
-		'Common base class for all players'
-		teamCount = 0
+    'Common base class for all players'
+    teamCount = 0
 
-		def __init__(self, name):
+    def __init__(self, name):
 
-		  self.name = name #Primitive Data Structure: String
-		  
-		  self.race = input("Choose your race. (human, elf, dwarf, halfling, gnome, half-orc)").lower()
-		  
-		  #self.icon = input("Choose one of ten player icons [playerIcon1(), playerIcon6(), etc]")
-		  
-		  if self.race not in possible_races:
-		    self.race = input("Please choose a valid race.")
-		    
-		  self.character_class = input("Choose your class. (barbarian, bard, cleric, druid, fighter, mage, monk, paladin, ranger, sorcerer, rogue, warlock)").lower()
-		  
-		  if self.character_class not in possible_classes:
-		    self.character_class = input("Please choose a valid class.")
-		    
-		  self.stats = {"Strength": random.randint(3,18), "Constitution": random.randint(3,18), "Dexterity": random.randint(3,18), "Intelligence": random.randint(3,18), "Wisdom": random.randint(3,18), "Charisma": random.randint(3,18)}
-		  
-		  self.icon = icons[random.randint(0,9)]
-		  
-		  Player.teamCount += 1
-		  self.inventory = set()
-		
-		def init_inventory(self):
-		  if input("Do you wish to add any initial items to the inventory? (y/n)") == 'y':
-		    addItems = True
-		    while addItems:
-		      self.addItemToInventory(input("What item should be added?"))
-		      if input("Continue adding items to inventory? (y/n)") == 'n':
-		        addItems = False
+      self.name = name #Primitive Data Structure: String
+      
+      self.race = input("Choose your race. (human, elf, dwarf, halfling, gnome, half-orc)").lower()
+      
+      #self.icon = input("Choose one of ten player icons [playerIcon1(), playerIcon6(), etc]")
+      
+      if self.race not in possible_races:
+        self.race = input("Please choose a valid race.")
+        
+      self.character_class = input("Choose your class. (barbarian, bard, cleric, druid, fighter, mage, monk, paladin, ranger, sorcerer, rogue, warlock)").lower()
+      
+      if self.character_class not in possible_classes:
+        self.character_class = input("Please choose a valid class.")
+        
+      self.stats = {"Strength": random.randint(3,18), "Constitution": random.randint(3,18), "Dexterity": random.randint(3,18), "Intelligence": random.randint(3,18), "Wisdom": random.randint(3,18), "Charisma": random.randint(3,18)}
+      
+      self.icon = icons[random.randint(0,9)]
+      
+      Player.teamCount += 1
+      self.inventory = set()
+    
+    def init_inventory(self):
+      if input("Do you wish to add any initial items to the inventory? (y/n)") == 'y':
+        addItems = True
+        while addItems:
+          self.addItemToInventory(input("What item should be added?"))
+          if input("Continue adding items to inventory? (y/n)") == 'n':
+            addItems = False
             
-		def addItemToInventory(self, item):
-			self.inventory.add(item)
-    	
-		def checkForItem(self,item):
-			if item in self.inventory:
-				return True
-			else:
-				print(item, " is not in ", self.name, "'s inventory.")
+    def addItemToInventory(self, item):
+      self.inventory.add(item)
+      
+    def checkForItem(self,item):
+      if item in self.inventory:
+        return True
+      else:
+        print(item, " is not in ", self.name, "'s inventory.")
 
-		def displayInventory(self):
-		  print("Inventory items: {}".format(self.inventory) )
+    def displayInventory(self):
+      print("Inventory items: {}".format(self.inventory) )
 
-		def displayCharacter(self):
-			print("Name : ", self.name)
-			print("Statistics: ", self.stats)
-			self.displayInventory()
-			print("Class: ", self.character_class)
-			print("Race: ", self.race)
-			print("\n")
-			displayPartyMembers()
-			return self.icon()
-		
-
-#http://www.python-course.eu/python3_inheritance.php FOR ADDING DIFFERENT PLAYER CLASSES AND RACES IF TIME ALLOWS
-
-"""
-TODO:
-1) Create a world or dungeon map using a graph (nodes/locations connected by edges with weights that represent distance and expended energy when crossing)...
-2) A collection of quests using a tree (that way, even though there is still an order to which quests you can complete first, the players are still given a CYOA-esque choice)...
-3. Linked list (potentially a queue) of different bosses or NPC (nonplayer characters) that you can create in a specific order that reflects leveling up (you may only reach the next one by going through the previous one)...
-4. A history of the most recent boss, town, etc you have encountered using a stack
-"""
+    def displayCharacter(self):
+      print("Name : ", self.name)
+      print("Statistics: ", self.stats)
+      self.displayInventory()
+      print("Class: ", self.character_class)
+      print("Race: ", self.race)
+      print("\n")
+      displayPartyMembers()
+      return self.icon()
 
 class Map(object):
   """ Graph data structure, undirected by default. """
